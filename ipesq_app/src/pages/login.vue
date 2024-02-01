@@ -12,27 +12,41 @@
               </v-form>
             </v-card-text>
           </v-card>
+          {{ myStore.count }}
+          <v-btn @click="aumentar">incrementar</v-btn>
         </v-col>
       </v-row>
+      <div>
+    
+  </div>
     </v-container>
   </template>
+  <script setup>
+  import { ref } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { useMyStore } from '../stores/store';
   
-  <script>
-  export default {
-    data() {
-      return {
-        usuario: "",
-        senha: "",
-      };
-    },
-    methods: {
-      login() {
+  
+    
+      const usuario = ref('');
+      const senha = ref('');
+      const router = useRouter();
+      const route = useRoute();
+      const myStore = useMyStore();
+      
+      const aumentar = () =>{
+        myStore.increment()
+      }
+  
+      const login = () => {
+        console.log("Usuário:", usuario.value, "Senha:", senha.value);
         
-        console.log("Usuário:", this.usuario, "Senha:", this.senha);
-        this.$router.push('/index');
-      },
-    },
-  };
+        router.push('/index');
+      };
+  
+      
+    
+  
   </script>
   
   <style scoped>
