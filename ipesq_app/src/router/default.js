@@ -1,6 +1,6 @@
 import tese from '@/pages/tese.vue'
 import index from '@/pages/index.vue'
-
+import login from '@/pages/login.vue'
 
 
 
@@ -15,6 +15,12 @@ export default [
         component: index
   
       },
+      {
+        path: '/',
+        component: login
+  
+      },
+
 
     
     ]
