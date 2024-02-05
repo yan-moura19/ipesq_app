@@ -4,20 +4,19 @@
         color="primary"
         prominent
       >
-        <v-app-bar-nav-icon variant="text" ></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon variant="text" @click="tamanho = !tamanho"></v-app-bar-nav-icon>
         <v-toolbar-title>IPESQ</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn variant="text" icon="mdi-logout" @click="sair"></v-btn>
       </v-app-bar>
       <v-navigation-drawer
-        expand-on-hover
-        rail
+        :width="tamanho? 60: 200"
       >
         <v-list>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+            
             title="Sandra Adams"
-            subtitle="sandra_a88@gmailcom"
+          
           ></v-list-item>
         </v-list>
         <v-divider></v-divider>
@@ -40,6 +39,7 @@ export default {
     return {
       drawer: true,
       group: null,
+      tamanho: true,
       rail: true,
       items: [
         {

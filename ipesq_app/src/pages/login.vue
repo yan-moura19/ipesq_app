@@ -12,8 +12,7 @@
               </v-form>
             </v-card-text>
           </v-card>
-          {{ myStore.count }}
-          <v-btn @click="aumentar">incrementar</v-btn>
+       
         </v-col>
       </v-row>
       <div>
