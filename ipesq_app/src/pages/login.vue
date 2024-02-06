@@ -6,7 +6,7 @@
             <v-card-title class="headline text-center">Login</v-card-title>
             <v-card-text>
               <v-form @submit.prevent="login">
-                <v-text-field v-model="usuario" label="Usuário" outlined></v-text-field>
+                <v-text-field v-model="usuario" label="Email" outlined></v-text-field>
                 <v-text-field v-model="senha" label="Senha" type="password" outlined></v-text-field>
                 <v-btn type="submit" color="primary" block>Entrar</v-btn>
               </v-form>
@@ -21,9 +21,10 @@
     </v-container>
   </template>
   <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-  import { useMyStore } from '../stores/store';
+  import { useMyStore } from '@/stores/store';
+  import { useMyAuth } from '@/stores/auth';
   
   
     
@@ -32,15 +33,25 @@
       const router = useRouter();
       const route = useRoute();
       const myStore = useMyStore();
+      const myAuth = useMyAuth();
       
       const aumentar = () =>{
         myStore.increment()
       }
+      onMounted(() => {
+        myAuth.resetAuth();
+      });
   
       const login = () => {
-        console.log("Usuário:", usuario.value, "Senha:", senha.value);
+       
+        myAuth.login( usuario.value,senha.value).then(()=>{
+          router.push('/paciente');
+        }).catch((err)=>{
+          console.log(err)
+          
+        })
         
-        router.push('/index');
+       
       };
   
       

@@ -1,0 +1,1 @@
+export const URL_API = 'http://ipesq-hmg-9712aeff20c4.herokuapp.com/api/'

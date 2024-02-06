@@ -33,50 +33,30 @@
   </template>
 
   
-<script >
-export default {
-  data() {
-    return {
-      drawer: true,
-      group: null,
-      tamanho: true,
-      rail: true,
-      items: [
-        {
-          title: 'Foo',
-          value: 'foo',
-        },
-        {
-          title: 'Bar',
-          value: 'bar',
-        },
-        {
-          title: 'Fizz',
-          value: 'fizz',
-        },
-        {
-          title: 'Buzz',
-          value: 'buzz',
-        },
-      ],
+<script setup>
+import { ref, watch, onMounted } from 'vue';
+
+
+    const drawer = ref(true);
+    const group = ref(null);
+    const tamanho = ref(true);
+    const rail = ref(true);
+
+    const sair = () => {
+      // Use `router` from the `useRouter` composition API function
+      // Assuming you have access to the router instance
+      // router.push('/');
     };
-  },
-  mounted(){
-   console.log(this.$route.path == '/')
 
-  },
-  methods:{
-    sair(){
-      this.$router.push('/')
-    }
+    watch(group, () => {
+      drawer.value = false;
+    });
 
-  },
+    onMounted(() => {
+      
+    });
 
-  watch: {
-    group: function () {
-      this.drawer = false;
-    },
-  },
-};
+   
+
 //
 </script>
