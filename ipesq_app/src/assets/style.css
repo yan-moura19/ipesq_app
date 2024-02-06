@@ -43,4 +43,8 @@
     align-items: center;
     font-size: 1.2rem;
   }
-  
+  .sobrepor {
+    position: fixed;
+    
+    z-index: 9999; /* Certifique-se de que o z-index seja maior do que o dos elementos abaixo */
+  }

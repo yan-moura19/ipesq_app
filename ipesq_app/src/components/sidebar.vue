@@ -2,7 +2,8 @@
   <v-card>
       <v-app-bar
         color="primary"
-        prominent
+        
+        floating
       >
         <v-app-bar-nav-icon variant="text" @click="tamanho = !tamanho"></v-app-bar-nav-icon>
         <v-toolbar-title>IPESQ</v-toolbar-title>
@@ -10,7 +11,8 @@
         <v-btn variant="text" icon="mdi-logout" @click="sair"></v-btn>
       </v-app-bar>
       <v-navigation-drawer
-        :width="tamanho? 60: 200"
+        :width="tamanho? 200: 200"
+        
       >
         <v-list>
           <v-list-item

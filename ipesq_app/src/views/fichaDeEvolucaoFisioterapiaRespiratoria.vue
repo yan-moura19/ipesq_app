@@ -135,7 +135,7 @@ const router = useRouter()
 
 
 const voltar = (()=>{
-    router.push('/paciente')
+    router.go(-1)
 
 })
 

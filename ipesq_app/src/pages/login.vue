@@ -22,23 +22,24 @@
   </template>
   <script setup>
   import { ref, onMounted } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import { useMyStore } from '@/stores/store';
+  import {  useRouter } from 'vue-router';
+  
   import { useMyAuth } from '@/stores/auth';
+  import { useMyPaciente} from '@/stores/paciente'
   
   
-    
+     const paciente = useMyPaciente()
       const usuario = ref('');
       const senha = ref('');
       const router = useRouter();
-      const route = useRoute();
-      const myStore = useMyStore();
+
       const myAuth = useMyAuth();
       
-      const aumentar = () =>{
-        myStore.increment()
-      }
-      onMounted(() => {
+      
+      const resetPaciente = (()=>{
+      paciente.resetPacienteSelecionado()
+    })
+          onMounted(() => {
         myAuth.resetAuth();
       });
   

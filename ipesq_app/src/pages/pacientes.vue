@@ -1,8 +1,9 @@
 <template>
     <v-container>
       <v-row >
-        <v-col cols="10">
-        <VAutocomplete
+        
+        <v-col cols="12">
+          <VAutocomplete
         :items="pacientes"
         item-title="nome"
         item-value="id"
@@ -10,37 +11,22 @@
        
         >
         </VAutocomplete>
-        {{ modal }}
+        
+        <v-btn  @click="abreModal">Novo Paciente</v-btn>
         
       </v-col>
-        <v-btn class="mt-5" @click="abreModal">Novo Paciente</v-btn>
+        
 
       </v-row>
-      <v-card class=" mt-5" v-if="pacienteSelecionado">
-        <v-col class="mt-1 ml-2 pb-4">
-        
-        
-          <v-col>
-            <v-row> <h4>Nome: &nbsp;</h4> {{ pacienteSelecionado.nome }}</v-row>
-            <v-row> <h4>Nome da mãe: &nbsp;</h4> {{ pacienteSelecionado.nomeMae }}</v-row>
-          </v-col>
-         
-
-        
       
-          <v-col>
-          <v-row> <h4>Idade:&nbsp; </h4><span> {{ pacienteSelecionado.idade }}</span> </v-row>
-            <v-row> <h4>Data de nascimento: &nbsp;</h4><span> {{ pacienteSelecionado.dataNascimento }}</span> </v-row>
-          </v-col>
-        
-      </v-col>
-        <v-card-actions class="mt-2">
-          <h4 >NOVO FORMULÁRIO</h4>
+      <info-paciente/>
+      <v-card class="mt-2">
+        <h4 class="mt-2 ml-2">NOVO FORMULÁRIO</h4>
           <v-select
+          class="ml-2 mr-2 mt-2"
           :items="['FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA','FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA']"
           v-model="formulario"
           ></v-select>
-        </v-card-actions>
       </v-card>
       
       <modal-cadastrar-paciente
@@ -85,6 +71,7 @@ const selectedPaciente = ref(null);
 const modal = ref(false);
 const closeModal = (()=>{
   modal.value = false
+  getNomesPacientes();
 })
 const abreModal = (()=>{
   modal.value =true
@@ -106,13 +93,17 @@ watch(selectedPaciente, (novoValor, valorAntigo) => {
       }) 
 });
 
-
-onMounted(async () => {
-      await getPacientes().then((resp)=>{
+const getNomesPacientes = (()=>{
+  getPacientes().then((resp)=>{
         pacientes.value = resp.data
 
       })
-      paciente.resetPacienteSelecionado()
+})
+
+
+onMounted(async () => {
+    await getNomesPacientes();
+      
     });
 
 </script>

@@ -1,4 +1,5 @@
 <template>
+    <info-paciente/>
     <v-container fluid width="800px">
         <v-card class="my-2 py-4 text-center teal darken-4">
       <h2 class="grey--text text--lighten-4">
@@ -56,7 +57,7 @@
         v-model="form.egf"
         ></v-select>
     </v-col>
-    <v-btn class="primary">SALVAR</v-btn>
+    <v-btn class="primary" @click="salvar">SALVAR</v-btn>
     
     <button class="floating-button-direita" @click="voltar"> <v-icon
           start
@@ -72,13 +73,33 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import moment from 'moment'
+import {salvarFormulario}  from '@/modulos/pacientesMethods'
 
 const router = useRouter()
 
 
 const voltar = (()=>{
-    router.push('/paciente')
+    router.go(-1)
 
+})
+const salvar = (async ()=>{
+    let hoje = moment().format('YYYY-MM-DD');
+    let body = {  
+  dataAplicacao: hoje,
+  nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA",
+  formJson: form.value,
+  
+    }
+    await salvarFormulario(body).then((resp)=>{
+        alert("salvo")
+
+    }).catch(()=>{
+        alert("não foi possivel salvar")
+    })
+
+
+    console.log(body)
 })
 
 var form = ref({

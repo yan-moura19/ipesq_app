@@ -2,7 +2,7 @@
   <v-app class="notranslate" translate="no">
    
     <v-main class="white notranslate"  translate="no">
-      <sidebar v-if="estaAutenticado"/>
+      <sidebar  class="sobrepor" v-if="estaAutenticado"/>
       <router-view />
     </v-main>
   </v-app>
