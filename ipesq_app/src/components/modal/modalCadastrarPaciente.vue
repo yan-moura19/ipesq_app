@@ -1,6 +1,6 @@
 <template>
-    <v-dialog v-model="modal" transition="dialog-top-transition" width="80%">
-        {{ props.show }}
+    <v-dialog v-model="props.show" transition="dialog-top-transition" width="80%" persistent>
+        
 
         <v-card class="px-4 py-4">
         <span class="d-flex justify-end">
@@ -29,12 +29,15 @@
 </template>
 
 <script setup>
-import { ref,defineEmits, onMounted  } from 'vue';
+import { ref,defineEmits, onMounted,defineProps  } from 'vue';
 import {postPaciente} from '../../modulos/pacientesMethods'
 
 const props = defineProps({
   show: Boolean
 });
+
+
+
 const formData = ref({
   nome: '',
   dataNascimento: null,
@@ -47,7 +50,7 @@ const submitForm = () => {
 const emit = defineEmits(['close'])
 const modal = ref(true)
 const close = (()=>{
-    console.log("emit")
+    
     emit('close', false);
 
 })
@@ -63,6 +66,7 @@ const salvarPaciente =(()=>{
     })
 })
 onMounted(()=>{
+   
     
 })
 

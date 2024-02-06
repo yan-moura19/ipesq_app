@@ -10,6 +10,7 @@
        
         >
         </VAutocomplete>
+        {{ modal }}
         
       </v-col>
         <v-btn class="mt-5" @click="abreModal">Novo Paciente</v-btn>
@@ -43,14 +44,10 @@
       </v-card>
       
       <modal-cadastrar-paciente
-      
-      v-bind="{ show:modal.active }"
+      :show="modal"
       @close="closeModal"
-      
       />
-        
-        
-        
+       
     </v-container>
   
 </template>
@@ -84,26 +81,23 @@ watch(formulario, (novoValor, valorAntigo) => {
 });
 const selectedPaciente = ref(null);
 
-const modal = ref({
-      active: true,
-    });
+const modal = ref(false);
+const closeModal = (()=>{
+  modal.value = false
+})
+const abreModal = (()=>{
+  modal.value =true
+})
 
 const onSelectedPacienteChange =  (idPaciente) => {
      
       getPacientePorId(idPaciente).then(()=>{
-        console.log("ok")
+        
       }) 
 }
 
 
-const closeModal = (()=>{
-  
-  modal.active = false
-  console.log(modal.active)
-})
-const abreModal = (()=>{
-  modal.active =true
-})
+
 
 watch(selectedPaciente, (novoValor, valorAntigo) => {
   getPacientePorId(novoValor).then(()=>{
