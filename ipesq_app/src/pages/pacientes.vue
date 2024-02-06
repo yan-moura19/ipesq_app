@@ -44,7 +44,8 @@
       </v-card>
       
       <modal-cadastrar-paciente
-      :show="modal"
+      
+      v-model="modal"
       @close="closeModal"
       />
        

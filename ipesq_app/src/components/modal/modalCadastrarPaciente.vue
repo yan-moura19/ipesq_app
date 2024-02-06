@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="props.show" transition="dialog-top-transition" width="80%" persistent>
+    <v-dialog  transition="dialog-top-transition" width="80%" persistent>
         
 
         <v-card class="px-4 py-4">
@@ -29,12 +29,9 @@
 </template>
 
 <script setup>
-import { ref,defineEmits, onMounted,defineProps  } from 'vue';
+import { ref,defineEmits, onMounted,  } from 'vue';
 import {postPaciente} from '../../modulos/pacientesMethods'
 
-const props = defineProps({
-  show: Boolean
-});
 
 
 
