@@ -16,23 +16,23 @@
 
       </v-row>
       <v-card class=" mt-5" v-if="pacienteSelecionado">
-        <v-row class="mt-6 ml-8 pb-4">
+        <v-col class="mt-1 ml-2 pb-4">
         
-        <v-row cols="6" md="6">
+        
           <v-col>
             <v-row> <h4>Nome: &nbsp;</h4> {{ pacienteSelecionado.nome }}</v-row>
             <v-row> <h4>Nome da mãe: &nbsp;</h4> {{ pacienteSelecionado.nomeMae }}</v-row>
           </v-col>
          
 
-        </v-row>
-        <v-row cols="6" class="mt-n4">
+        
+      
           <v-col>
           <v-row> <h4>Idade:&nbsp; </h4><span> {{ pacienteSelecionado.idade }}</span> </v-row>
             <v-row> <h4>Data de nascimento: &nbsp;</h4><span> {{ pacienteSelecionado.dataNascimento }}</span> </v-row>
           </v-col>
-        </v-row>
-      </v-row>
+        
+      </v-col>
         <v-card-actions class="mt-2">
           <h4 >NOVO FORMULÁRIO</h4>
           <v-select
@@ -41,6 +41,7 @@
           ></v-select>
         </v-card-actions>
       </v-card>
+      
       <modal-cadastrar-paciente
       
       v-bind="{ show:modal.active }"
@@ -48,7 +49,7 @@
       
       />
         
-        <router-view></router-view>
+        
         
     </v-container>
   
@@ -70,6 +71,17 @@ const resetPaciente = (()=>{
 const router = useRouter();
 var pacientes = ref([]);
 var formulario = ref()
+
+watch(formulario, (novoValor, valorAntigo) => {
+  var rota =novoValor.trim().toLowerCase()
+  rota = rota.replace(/\s/g, "")
+  rota = rota.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  
+  
+  router.push({name: rota})
+  
+ 
+});
 const selectedPaciente = ref(null);
 
 const modal = ref({
@@ -77,7 +89,7 @@ const modal = ref({
     });
 
 const onSelectedPacienteChange =  (idPaciente) => {
-      console.log("mudou")
+     
       getPacientePorId(idPaciente).then(()=>{
         console.log("ok")
       }) 
@@ -85,7 +97,7 @@ const onSelectedPacienteChange =  (idPaciente) => {
 
 
 const closeModal = (()=>{
-  console.log("vo")
+  
   modal.active = false
   console.log(modal.active)
 })

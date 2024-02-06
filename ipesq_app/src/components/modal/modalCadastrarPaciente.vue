@@ -63,7 +63,7 @@ const salvarPaciente =(()=>{
     })
 })
 onMounted(()=>{
-    console.log(props)
+    
 })
 
 </script>
