@@ -35,17 +35,18 @@
   
 <script setup>
 import { ref, watch, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 
     const drawer = ref(true);
     const group = ref(null);
     const tamanho = ref(true);
     const rail = ref(true);
+    const router = useRouter();
 
     const sair = () => {
-      // Use `router` from the `useRouter` composition API function
-      // Assuming you have access to the router instance
-      // router.push('/');
+      
+       router.push('/');
     };
 
     watch(group, () => {

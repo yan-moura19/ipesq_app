@@ -13,7 +13,7 @@ export const useMyAuth = defineStore('authLogin', {
     async login(usuario, senha) {
         return await axios.post(`${URL_API}Usuario/login`,{email: usuario, senha: senha}, null).then((resp)=>{
             this.user = resp.data;
-            this.headers =`Bearer ${resp.data.token}`;
+            this.headers = {Authorization :`Bearer ${resp.data.token}`};
             this.estaAutenticado = true;
 
         })
