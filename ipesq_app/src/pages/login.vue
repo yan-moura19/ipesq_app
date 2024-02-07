@@ -41,6 +41,7 @@
     })
           onMounted(() => {
         myAuth.resetAuth();
+        resetPaciente()
       });
   
       const login = () => {
