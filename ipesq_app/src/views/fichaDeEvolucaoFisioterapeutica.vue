@@ -99,7 +99,7 @@ const salvar = (async ()=>{
     })
 
 
-    console.log(body)
+    
 })
 
 var form = ref({

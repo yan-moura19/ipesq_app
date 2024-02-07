@@ -114,7 +114,7 @@
         
         
     </v-col>
-    <v-btn class="primary">SALVAR</v-btn>
+    <v-btn class="primary" @click="salvar">SALVAR</v-btn>
     
     <button class="floating-button-direita" @click="voltar"> <v-icon
           start
@@ -130,6 +130,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import moment from 'moment'
+import {salvarFormulario}  from '@/modulos/pacientesMethods'
 
 const router = useRouter()
 
@@ -137,6 +139,23 @@ const router = useRouter()
 const voltar = (()=>{
     router.go(-1)
 
+})
+const salvar = (async ()=>{
+    let hoje = moment().format('YYYY-MM-DD');
+    let body = {  
+        dataAplicacao: hoje,
+        nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA",
+        formJson: form.value,
+    }
+    await salvarFormulario(body).then((resp)=>{
+        alert("salvo")
+
+    }).catch(()=>{
+        alert("não foi possivel salvar")
+    })
+
+
+    
 })
 
 var form = ref({

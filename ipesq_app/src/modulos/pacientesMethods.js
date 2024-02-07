@@ -16,6 +16,18 @@ function getIdPaciente(){
     return myPaciente.pacienteSelecionado.id
 
 }
+export async function getFormularios(body){
+    
+    const myPaciente = useMyPaciente();
+    let id = getIdPaciente();
+    let headers = getHeaders();
+    return await axios.get(`${URL_API}Formulario?pacienteId=${id}&dataInicio=${body.dataInicio}&dataFim=${body.dataFim}`, { headers:headers}).then((resp)=>{
+        let modelPaciente = resp.data.paciente
+        modelPaciente.formularios = resp.data.formularios
+        myPaciente.setPacienteSelecionado(modelPaciente);
+    })
+
+}
 
 export async function getPacientePorId(id){
    
@@ -33,7 +45,7 @@ export async function salvarFormulario(model){
     model.usuarioId = getIdUsuario();
     model.especialidadeId = 1
     // model.formJson = JSON.stringify(model.formJson )
-    console.log(model)
+    
 
     return await axios.post(`${URL_API}Formulario`,model, { headers:token})
 }

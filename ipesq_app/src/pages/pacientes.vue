@@ -13,6 +13,7 @@
         </VAutocomplete>
         
         <v-btn  @click="abreModal">Novo Paciente</v-btn>
+       
         
       </v-col>
         
@@ -20,19 +21,24 @@
       </v-row>
       
       <info-paciente/>
-      <v-card class="mt-2">
+      <v-card class="mt-2 align-center text-center">
         <h4 class="mt-2 ml-2">NOVO FORMULÁRIO</h4>
           <v-select
           class="ml-2 mr-2 mt-2"
           :items="['FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA','FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA']"
           v-model="formulario"
           ></v-select>
+          <v-btn class="mb-2 ml-2 mr-8" block @click="abreModalHistorico">Historico de FORMULÁRIO</v-btn>
       </v-card>
       
       <modal-cadastrar-paciente
       
       v-model="modal"
       @close="closeModal"
+      />
+      <ModalHistoricoPaciente
+      v-model="modalHistorico"
+      @close="closeModalHistorico"
       />
        
     </v-container>
@@ -44,8 +50,11 @@ import {  ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getPacientes, getPacientePorId } from '../modulos/pacientesMethods'
 import { useMyPaciente} from '@/stores/paciente'
+import ModalHistoricoPaciente from '@/components/modal/modalHistoricoPaciente.vue';
 
 var pacienteSelecionado = ref(null)
+const modalHistorico = ref(false);
+const modal = ref(false);
 const paciente = useMyPaciente()
 pacienteSelecionado.value = paciente.pacienteSelecionado
 
@@ -68,13 +77,20 @@ watch(formulario, (novoValor, valorAntigo) => {
 });
 const selectedPaciente = ref(null);
 
-const modal = ref(false);
+
 const closeModal = (()=>{
   modal.value = false
   getNomesPacientes();
 })
 const abreModal = (()=>{
   modal.value =true
+})
+const closeModalHistorico = (()=>{
+  modalHistorico.value = false
+  
+})
+const abreModalHistorico = (()=>{
+  modalHistorico.value =true
 })
 
 const onSelectedPacienteChange =  (idPaciente) => {

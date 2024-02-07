@@ -23,7 +23,6 @@
   <script setup>
   import { ref, onMounted } from 'vue';
   import {  useRouter } from 'vue-router';
-  
   import { useMyAuth } from '@/stores/auth';
   import { useMyPaciente} from '@/stores/paciente'
   
