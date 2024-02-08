@@ -22,5 +22,6 @@ export const useMyPaciente = defineStore('paciente', {
     resetPacienteSelecionado() {
         this.pacienteSelecionado = {}
      },
+     
   },
 })

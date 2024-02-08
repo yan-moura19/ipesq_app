@@ -16,6 +16,11 @@ function getIdPaciente(){
     return myPaciente.pacienteSelecionado.id
 
 }
+export function getNomeLogin(){
+    const myAuth = useMyAuth();
+    return myAuth.user.nome;
+
+}
 export async function getFormularios(body){
     
     const myPaciente = useMyPaciente();

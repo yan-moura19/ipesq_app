@@ -19,7 +19,7 @@ const router = createRouter({
       path: '/',
      
       component: mainLayout,
-    // redirect: { name: 'Login' },
+     //redirect: { name: 'Login' },
     children: defaultRoutes,
     },
     

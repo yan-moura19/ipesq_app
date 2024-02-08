@@ -12,7 +12,7 @@
         class=""
         multiple
         :items="itensEG"
-        v-model="form.egi"
+        v-model="formSelecionado.egi"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -21,7 +21,7 @@
         multiple
         class="mx-4 "
         :items="itensCondutas"
-        v-model="form.conduta"
+        v-model="formSelecionado.conduta"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -29,7 +29,7 @@
         <v-select
         class="mx-4 "
         :items="itensDeUso"
-        v-model="form.tala"
+        v-model="formSelecionado.tala"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -37,7 +37,7 @@
         <v-select
         class="mx-4 "
         :items="itensDeUso"
-        v-model="form.ortese"
+        v-model="formSelecionado.ortese"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -45,7 +45,7 @@
         <v-text-field
         class="mx-4 "
         :items="itensDeUso"
-        v-model="form.relato"
+        v-model="formSelecionado.relato"
         ></v-text-field>
     </v-col>
     <v-col class="d-flex justify-start align-center ">
@@ -54,42 +54,57 @@
         multiple
         class=""
         :items="itensEG"
-        v-model="form.egf"
+        v-model="formSelecionado.egf"
         ></v-select>
     </v-col>
-    <v-btn class="primary" @click="salvar">SALVAR</v-btn>
-    
-    <button class="floating-button-direita" @click="voltar"> <v-icon
+    <v-col>
+        <h4>Profissional responsável: {{ profissional }}</h4>
+    </v-col>
+    <v-col cols="12">
+        <v-row class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
+
+    </v-col>
+    <button class="floating-button-esquerda" @click="voltar"> <v-icon
           start
           icon="mdi-arrow-left"
         ></v-icon></button>
-    <!-- <v-card>
-        <v-btn class="primary">SALVAR</v-btn>
-    </v-card> -->
+   
     </v-container>
   
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onBeforeUnmount,onMounted} from 'vue';
 import { useRouter } from 'vue-router';
 import moment from 'moment'
 import {salvarFormulario}  from '@/modulos/pacientesMethods'
+import  { useMyForm} from '@/stores/form'
 
 const router = useRouter()
+const useForm = useMyForm()
 
+var formSelecionado = computed(() => {
+  return useForm.formSelecionado;
+});
+onBeforeUnmount(()=>{
+    useForm.resetForm()
+})
+onMounted(()=>{
+   console.log( !!useForm.formSelecionado.id)
+   
+})
 
 const voltar = (()=>{
-    router.go(-1)
+    router.push({name: 'pacienteList'})
+    useForm.resetForm()
 
 })
 const salvar = (async ()=>{
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
-  dataAplicacao: hoje,
-  nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA",
-  formJson: form.value,
-  
+        dataAplicacao: hoje,
+        nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA",
+        formJson: formSelecionado,
     }
     await salvarFormulario(body).then((resp)=>{
         alert("salvo")

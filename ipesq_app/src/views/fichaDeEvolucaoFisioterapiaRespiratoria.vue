@@ -13,7 +13,7 @@
         class=""
         multiple
         :items="itensEG"
-        v-model="form.estadoCriancaInicio"
+        v-model="formSelecionado.estadoCriancaInicio"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -21,7 +21,7 @@
         <v-text-field
         class="mx-4 "
         :items="itensDeUso"
-        v-model="form.auscultaPulmonarInicial"
+        v-model="formSelecionado.auscultaPulmonarInicial"
         ></v-text-field>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -31,17 +31,17 @@
                 <v-row><span class="mt-4">SpO2</span> <v-text-field
                     class="mx-4 "
                     :items="itensDeUso"
-                    v-model="form.sinaisVitaisIniciais.spop2"
+                    v-model="formSelecionado.sinaisVitaisIniciais.spop2"
                     ></v-text-field><span class="mt-4">%.</span></v-row>
                     <v-row><span class="mt-4">FC</span> <v-text-field
                     class="mx-4 "
                     :items="itensDeUso"
-                    v-model="form.sinaisVitaisIniciais.fc"
+                    v-model="formSelecionado.sinaisVitaisIniciais.fc"
                     ></v-text-field><span class="mt-4">bpm.</span></v-row>
                     <v-row><span class="mt-4">FR</span> <v-text-field
                     class="mx-4"
                     :items="itensDeUso"
-                    v-model="form.sinaisVitaisIniciais.fr"
+                    v-model="formSelecionado.sinaisVitaisIniciais.fr"
                     ></v-text-field> <span class="mt-4">irpm.</span></v-row>
             
             
@@ -57,7 +57,7 @@
         multiple
         class="mx-4 "
         :items="itensCondutas"
-        v-model="form.conduta"
+        v-model="formSelecionado.conduta"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -65,7 +65,7 @@
         <v-text-field
         class="mx-4 "
         :items="itensDeUso"
-        v-model="form.relato"
+        v-model="formSelecionado.relato"
         ></v-text-field>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -73,7 +73,7 @@
         <v-text-field
         class="mx-4 "
         :items="itensDeUso"
-        v-model="form.auscultaPulmonarFinal"
+        v-model="formSelecionado.auscultaPulmonarFinal"
         ></v-text-field>
     </v-col>
     
@@ -84,7 +84,7 @@
         multiple
         class=""
         :items="itensEG"
-        v-model="form.estadoCriancaFinal"
+        v-model="formSelecionado.estadoCriancaFinal"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -94,17 +94,17 @@
                 <v-row><span class="mt-4">SpO2</span> <v-text-field
                     class="mx-4 "
                     :items="itensDeUso"
-                    v-model="form.sinaisVitaisFinais.spop2"
+                    v-model="formSelecionado.sinaisVitaisFinais.spop2"
                     ></v-text-field><span class="mt-4">%.</span></v-row>
                     <v-row><span class="mt-4">FC</span> <v-text-field
                     class="mx-4 "
                     :items="itensDeUso"
-                    v-model="form.sinaisVitaisFinais.fc"
+                    v-model="formSelecionado.sinaisVitaisFinais.fc"
                     ></v-text-field><span class="mt-4">bpm.</span></v-row>
                     <v-row><span class="mt-4">FR</span> <v-text-field
                     class="mx-4"
                     :items="itensDeUso"
-                    v-model="form.sinaisVitaisFinais.fr"
+                    v-model="formSelecionado.sinaisVitaisFinais.fr"
                     ></v-text-field> <span class="mt-4">irpm.</span></v-row>
             
             
@@ -114,9 +114,17 @@
         
         
     </v-col>
-    <v-btn class="primary" @click="salvar">SALVAR</v-btn>
+    <v-col>
+        <h4>Profissional responsável: {{ profissional }}</h4>
+    </v-col>
+    <v-col cols="12">
+        <v-row class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
+
+    </v-col>
     
-    <button class="floating-button-direita" @click="voltar"> <v-icon
+    
+    
+    <button class="floating-button-esquerda" @click="voltar"> <v-icon
           start
           icon="mdi-arrow-left"
         ></v-icon></button>
@@ -128,24 +136,51 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref,computed,onBeforeUnmount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import moment from 'moment'
-import {salvarFormulario}  from '@/modulos/pacientesMethods'
-
+import {salvarFormulario,getNomeLogin}  from '@/modulos/pacientesMethods'
+import  { useMyForm} from '@/stores/form'
 const router = useRouter()
 
 
-const voltar = (()=>{
-    router.go(-1)
+const useForm = useMyForm()
+const profissional = ref(getNomeLogin())
 
+
+if(!!useForm.formSelecionado.id){
+
+}else{
+    useForm.formFisioterapiaRespiratoria()
+
+}
+
+var formSelecionado = computed(() => {
+  return useForm.formSelecionado;
+});
+onBeforeUnmount(()=>{
+    useForm.resetForm()
+})
+const voltar = (()=>{
+    router.push({name: 'pacienteList'})
+    useForm.resetForm()
+
+})
+
+onMounted(()=>{
+    if(!!useForm.formSelecionado.id){
+
+    }else{
+        useForm.formFisioterapiaRespiratoria()
+
+    }
 })
 const salvar = (async ()=>{
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
         dataAplicacao: hoje,
         nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA",
-        formJson: form.value,
+        formJson: formSelecionado,
     }
     await salvarFormulario(body).then((resp)=>{
         alert("salvo")

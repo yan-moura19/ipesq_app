@@ -26,8 +26,10 @@
         <v-data-table
             :headers="headers"
             :items="formularios"
+            :loading="loading"
             loading-text="Carregando formulários"
             no-data-text="O usuário não possui formulários"
+            @click:row="handleClick"
             
            
             ><template #bottom></template>
@@ -43,30 +45,64 @@
 import { ref,defineEmits, onMounted,computed  } from 'vue';
 import { useMyPaciente} from '@/stores/paciente'
 import {getFormularios} from '@/modulos/pacientesMethods'
+import { useRouter } from 'vue-router';
+import moment from 'moment';
+import  {useMyForm} from '@/stores/form'
 
 
 const paciente = useMyPaciente()
+const router = useRouter();
 
 const headers = ref([
       { key: 'dataAplicacao', title: 'data Aplicacao' },
+      { key: 'nomeForm', title: 'Formulário' }
     ]);
 
+const useForm = useMyForm()
 
 const formData = ref({
-    dataInicio: null,
-    dataFim: null,
+    dataInicio: moment().format("YYYY-MM-DD"),
+    dataFim: moment().format("YYYY-MM-DD"),
   
 });
+const loading = ref(false)
 
 const emit = defineEmits(['close'])
+
+
 
 var formularios = computed(() => {
   return paciente.pacienteSelecionado.formularios;
 });
 
+
+
+const handleClick = (event, row)=>{
+   
+    let form = JSON.parse(row.item.form)
+    let nomeForm = row.item.nomeForm
+    form.id = row.item.id
+    useForm.setForm(form)
+    let rota = nomeForm.trim().toLowerCase()
+
+
+    
+    rota = rota.replace(/\s/g, "")
+    rota = rota.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  
+  
+        router.push({name: rota})
+}
+
 const buscar = (()=>{
-    getFormularios(formData.value)
-    console.log("buscou")
+    loading.value =true
+    getFormularios(formData.value).then(()=>{
+        loading.value =false
+
+    }).catch(()=>{
+        loading.value =false
+    })
+   
 })
 
 const close = (()=>{
@@ -76,6 +112,7 @@ const close = (()=>{
 })
 
 onMounted(()=>{
+    buscar()
    
     
 })

@@ -21,7 +21,7 @@
       </v-row>
       
       <info-paciente/>
-      <v-card class="mt-2 align-center text-center">
+      <v-card class="mt-2 align-center text-center" v-if="!!paciente.pacienteSelecionado.nome">
         <h4 class="mt-2 ml-2">NOVO FORMULÁRIO</h4>
           <v-select
           class="ml-2 mr-2 mt-2"
