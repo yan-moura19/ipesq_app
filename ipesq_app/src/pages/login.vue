@@ -25,7 +25,7 @@
   import {  useRouter } from 'vue-router';
   import { useMyAuth } from '@/stores/auth';
   import { useMyPaciente} from '@/stores/paciente'
-  console.log("ok")
+ 
   
      const paciente = useMyPaciente()
       const usuario = ref('');
