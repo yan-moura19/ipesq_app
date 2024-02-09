@@ -1,5 +1,5 @@
 <template>
-    <v-dialog  class="maiuscula" transition="dialog-top-transition" width="80%" persistent>
+    <v-dialog  class="maiuscula" transition="dialog-top-transition" width="80%" >
         
 
         <v-card class="px-4 py-4">
@@ -30,9 +30,10 @@
             loading-text="Carregando formulários"
             no-data-text="O usuário não possui formulários"
             @click:row="handleClick"
+            :items-per-page="5"
             
            
-            ><template #bottom></template>
+            >
         </v-data-table>
 
 

@@ -61,7 +61,8 @@
         <h4>Profissional responsável: {{ profissional }}</h4>
     </v-col>
     <v-col cols="12">
-        <v-row class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
+        <v-row v-if="!!formSelecionado.id" class="d-flex justify-end"><v-btn color="primary" @click="editar">SALVAR ALTERAÇÕES</v-btn></v-row>
+        <v-row v-else class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
 
     </v-col>
     <button class="floating-button-esquerda" @click="voltar"> <v-icon
@@ -77,7 +78,7 @@
 import { ref, computed, onBeforeUnmount,onMounted} from 'vue';
 import { useRouter } from 'vue-router';
 import moment from 'moment'
-import {salvarFormulario}  from '@/modulos/pacientesMethods'
+import {salvarFormulario,atualizaFormulario}  from '@/modulos/pacientesMethods'
 import  { useMyForm} from '@/stores/form'
 
 const router = useRouter()
@@ -99,12 +100,18 @@ const voltar = (()=>{
     useForm.resetForm()
 
 })
+const editar = (()=>{
+    
+    atualizaFormulario(formSelecionado.value)
+
+})
 const salvar = (async ()=>{
+    console.log(formSelecionado.value)
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
         dataAplicacao: hoje,
         nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA",
-        formJson: formSelecionado,
+        formJson: formSelecionado.value,
     }
     await salvarFormulario(body).then((resp)=>{
         alert("salvo")

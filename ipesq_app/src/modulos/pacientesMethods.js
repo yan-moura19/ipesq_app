@@ -20,6 +20,16 @@ export function getNomeLogin(){
     const myAuth = useMyAuth();
     return myAuth.user.nome;
 
+    
+}
+export async function atualizaFormulario(form){
+    let id = form.id
+    let headers = getHeaders();
+    let body = {...form}
+    delete body.id
+
+      return await axios.patch(`${URL_API}Formulario?formId=${id}`,body, { headers:headers})
+     
 }
 export async function getFormularios(body){
     
