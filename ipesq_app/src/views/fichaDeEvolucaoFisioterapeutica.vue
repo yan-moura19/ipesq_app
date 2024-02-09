@@ -69,6 +69,22 @@
           start
           icon="mdi-arrow-left"
         ></v-icon></button>
+        <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+    >
+      {{ message }}
+
+      <template v-slot:actions>
+        <v-btn
+          color="blue"
+          variant="text"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
    
     </v-container>
   
@@ -84,6 +100,12 @@ import  { useMyForm} from '@/stores/form'
 const router = useRouter()
 const useForm = useMyForm()
 
+
+const message = ref('')
+      const timeout = ref(2000)
+      const snackbar = ref(false)
+
+
 var formSelecionado = computed(() => {
   return useForm.formSelecionado;
 });
@@ -91,7 +113,7 @@ onBeforeUnmount(()=>{
     useForm.resetForm()
 })
 onMounted(()=>{
-   console.log( !!useForm.formSelecionado.id)
+   
    
 })
 
@@ -102,11 +124,19 @@ const voltar = (()=>{
 })
 const editar = (()=>{
     
-    atualizaFormulario(formSelecionado.value)
+    atualizaFormulario(formSelecionado.value).then(()=>{
+        snackbar.value = true
+      message.value = 'Alterações salvas no formulário'
+
+    }).catch(()=>{
+        snackbar.value = true
+        message.value = 'Não foi possivel salvar as alterações'
+       
+    })
 
 })
 const salvar = (async ()=>{
-    console.log(formSelecionado.value)
+    
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
         dataAplicacao: hoje,
@@ -114,27 +144,20 @@ const salvar = (async ()=>{
         formJson: formSelecionado.value,
     }
     await salvarFormulario(body).then((resp)=>{
-        alert("salvo")
+        snackbar.value = true
+      message.value = 'Formulário salvo'
 
     }).catch(()=>{
-        alert("não foi possivel salvar")
+        snackbar.value = true
+        message.value = 'Não foi possivel salvar'
+       
     })
 
 
     
 })
 
-var form = ref({
-    egi: [],
-    conduta: [],
-    tala: '',
-    ortese: '',
-    relato: '',
-    egf: []
 
-
-
-})
 const itensDeUso = ref([
     'MMSS',
     'MMII'

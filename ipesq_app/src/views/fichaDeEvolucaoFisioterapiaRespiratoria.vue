@@ -130,9 +130,22 @@
           start
           icon="mdi-arrow-left"
         ></v-icon></button>
-    <!-- <v-card>
-        <v-btn class="primary">SALVAR</v-btn>
-    </v-card> -->
+        <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+    >
+      {{ message }}
+
+      <template v-slot:actions>
+        <v-btn
+          color="blue"
+          variant="text"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>>
     </v-container>
   
 </template>
@@ -148,6 +161,9 @@ const router = useRouter()
 
 const useForm = useMyForm()
 const profissional = ref(getNomeLogin())
+        const message = ref('')
+      const timeout = ref(2000)
+      const snackbar = ref(false)
 
 
 if(!!useForm.formSelecionado.id){
@@ -179,7 +195,15 @@ onMounted(()=>{
 })
 const editar = (()=>{
     
-    atualizaFormulario(formSelecionado.value)
+    atualizaFormulario(formSelecionado.value).then(()=>{
+        snackbar.value = true
+      message.value = 'Alterações salvas no formulário'
+
+    }).catch(()=>{
+        snackbar.value = true
+        message.value = 'Não foi possivel salvar as alterações'
+       
+    })
 
 })
 const salvar = (async ()=>{
@@ -191,37 +215,20 @@ const salvar = (async ()=>{
         formJson: formSelecionado.value,
     }
     await salvarFormulario(body).then((resp)=>{
-        alert("salvo")
+        snackbar.value = true
+      message.value = 'Formulário salvo'
 
     }).catch(()=>{
-        alert("não foi possivel salvar")
+        snackbar.value = true
+        message.value = 'Não foi possivel salvar'
+       
     })
 
 
     
 })
 
-var form = ref({
-    estadoCriancaInicio: [],
-    auscultaPulmonarInicial: '',
-    sinaisVitaisIniciais: { 
-        spop2: '',
-        fc: '',
-        fr: ''
-    },
-    conduta: '',
-    relato: '',
-    auscultaPulmonarFinal: '',
-    estadoCriancaFinal: [],
-    sinaisVitaisFinais: { 
-        spop2: '',
-        fc: '',
-        fr: ''
-    },
 
-
-
-})
 const itensDeUso = ref([
     'MMSS',
     'MMII'

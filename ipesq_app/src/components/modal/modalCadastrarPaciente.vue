@@ -24,7 +24,24 @@
 
 
         </v-card>
+            <v-snackbar
+          v-model="snackbar"
+          :timeout="timeout"
+        >
+          {{ message }}
+
+          <template v-slot:actions>
+            <v-btn
+              color="blue"
+              variant="text"
+              @click="snackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
         </v-dialog>
+        
         
 </template>
 
@@ -32,7 +49,9 @@
 import { ref,defineEmits, onMounted,  } from 'vue';
 import {postPaciente} from '../../modulos/pacientesMethods'
 
-
+const message = ref('')
+      const timeout = ref(2000)
+      const snackbar = ref(false)
 
 
 const formData = ref({
@@ -40,10 +59,7 @@ const formData = ref({
   dataNascimento: null,
   nomeMae: ''
 });
-const submitForm = () => {
-  console.log('Dados do formulário:', formData.value);
-  // Aqui você pode enviar os dados para onde quiser, por exemplo, um servidor backend
-}
+
 const emit = defineEmits(['close'])
 const modal = ref(true)
 const close = (()=>{
@@ -57,9 +73,14 @@ const salvarPaciente =(()=>{
         dataNascimento: formData.value.dataNascimento,
         nomeMae: formData.value.nomeMae
     }).then(()=>{
-        alert("paciente salvo")
+      snackbar.value = true
+      message.value = 'paciente salvo'
+     
+        
     }).catch(()=>{
-        alert("Erro ao salvar paciente")
+      snackbar.value = true
+      message.value = 'Erro ao salvar paciente'
+       
     })
 })
 onMounted(()=>{
