@@ -8,16 +8,29 @@
               <v-form @submit.prevent="login">
                 <v-text-field v-model="usuario" label="Email" outlined></v-text-field>
                 <v-text-field v-model="senha" label="Senha" type="password" outlined></v-text-field>
-                <v-btn type="submit" color="primary" block>Entrar</v-btn>
+                <v-btn :loading="loading" type="submit" color="primary" block>Entrar</v-btn>
               </v-form>
             </v-card-text>
           </v-card>
        
         </v-col>
       </v-row>
-      <div>
-    
-  </div>
+      <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+    >
+      {{ message }}
+
+      <template v-slot:actions>
+        <v-btn
+          color="blue"
+          variant="text"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     </v-container>
   </template>
   <script setup>
@@ -31,6 +44,10 @@
       const usuario = ref('');
       const senha = ref('');
       const router = useRouter();
+      const loading = ref(false)
+      const message = ref('')
+      const timeout = ref(2000)
+      const snackbar = ref(false)
 
       const myAuth = useMyAuth();
       
@@ -44,11 +61,16 @@
       });
   
       const login = () => {
+        loading.value = true
        
         myAuth.login( usuario.value,senha.value).then(()=>{
           router.push('/paciente');
+          loading.value = false
         }).catch((err)=>{
-          console.log(err)
+          console.log(err.response.data)
+          message.value = err.response.data
+          loading.value = false
+          snackbar.value = true
           
         })
         
