@@ -7,6 +7,11 @@
       </h2>
     </v-card>
     <v-col class="d-flex justify-start align-center ">
+        <span class="mx-2 flex-grow-0 pr-2">Data de aplicação</span> 
+        <v-text-field type="date" v-model="formSelecionado.dataAplicacao" label="Data aplicação" outlined></v-text-field>
+        
+    </v-col>
+    <v-col class="d-flex justify-start align-center ">
         <span class="mx-2 flex-grow-0 pr-2">Estado da criança
                     no início da sessão</span> 
         <v-select
@@ -115,7 +120,8 @@
         
     </v-col>
     <v-col>
-        <h4>Profissional responsável: {{ profissional }}</h4>
+        <h4>Responsável: <span>{{ formSelecionado.profissional }}</span> </h4>
+        
     </v-col>
     <v-col cols="12">
         
@@ -170,6 +176,8 @@ if(!!useForm.formSelecionado.id){
 
 }else{
     useForm.formFisioterapiaRespiratoria()
+    useForm.formSelecionado.dataAplicacao = moment().format('YYYY-MM-DD')
+    useForm.formSelecionado.profissional = getNomeLogin() 
 
 }
 
@@ -189,7 +197,8 @@ onMounted(()=>{
     if(!!useForm.formSelecionado.id){
 
     }else{
-        useForm.formFisioterapiaRespiratoria()
+        useForm.formSelecionado.dataAplicacao = moment().format('YYYY-MM-DD')
+    useForm.formSelecionado.profissional = getNomeLogin() 
 
     }
 })

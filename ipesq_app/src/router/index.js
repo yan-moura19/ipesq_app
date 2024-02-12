@@ -17,14 +17,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-     
       component: mainLayout,
      //redirect: { name: 'Login' },
     children: defaultRoutes,
     },
-    
-
-
   ]
   
 })

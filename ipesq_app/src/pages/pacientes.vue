@@ -25,7 +25,7 @@
         <h4 class="mt-2 ml-2">NOVO FORMULÁRIO</h4>
           <v-select
           class="ml-2 mr-2 mt-2"
-          :items="['FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA','FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA']"
+          :items="rotas"
           v-model="formulario"
           ></v-select>
           <v-btn class="mb-2 ml-2 mr-8" block @click="abreModalHistorico">Historico de FORMULÁRIO</v-btn>
@@ -58,17 +58,26 @@ const modal = ref(false);
 const paciente = useMyPaciente()
 pacienteSelecionado.value = paciente.pacienteSelecionado
 
+const rotas = ref(
+  [
+    'FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA',
+    'FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA',
+     'FICHA DE EVOLUÇÃO PSICOPEDAGOGIA'
+    ]
+)
+
 const resetPaciente = (()=>{
   paciente.resetPacienteSelecionado()
 })
 const router = useRouter();
 var pacientes = ref([]);
-var formulario = ref()
+var formulario = ref(null)
 
 watch(formulario, (novoValor, valorAntigo) => {
   var rota =novoValor.trim().toLowerCase()
   rota = rota.replace(/\s/g, "")
   rota = rota.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  
   
   
   router.push({name: rota})

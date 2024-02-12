@@ -2,10 +2,15 @@ import { useMyAuth } from '@/stores/auth';
 import axios from 'axios'
 import { URL_API } from '@/ennviroments' 
 import { useMyPaciente} from '@/stores/paciente'
+import { useMyForm } from '@/stores/form';
 
 function getIdUsuario(){
     const myAuth = useMyAuth();
     return myAuth.user.usuarioId;
+}
+function getNomeProfissional(){
+    const myAuth = useMyAuth();
+    return myAuth.user.nome;
 }
 function getHeaders(){
     const myAuth = useMyAuth();
@@ -16,12 +21,19 @@ function getIdPaciente(){
     return myPaciente.pacienteSelecionado.id
 
 }
+function setFormSelecionado(form){
+    const formDb = useMyForm()
+    let formFormatter = JSON.parse(form)
+    formDb.setForm(formFormatter)
+
+}
 export function getNomeLogin(){
     const myAuth = useMyAuth();
     return myAuth.user.nome;
 
     
 }
+
 export async function atualizaFormulario(form){
     let id = form.id
     let headers = getHeaders();
@@ -59,10 +71,14 @@ export async function salvarFormulario(model){
     model.pacienteId = getIdPaciente();
     model.usuarioId = getIdUsuario();
     model.especialidadeId = 1
+    model.formJson.profissional = getNomeProfissional()
     // model.formJson = JSON.stringify(model.formJson )
     
 
-    return await axios.post(`${URL_API}Formulario`,model, { headers:token})
+    return await axios.post(`${URL_API}Formulario`,model, { headers:token}).then((resp)=>{
+        model.formJson.id = resp.data.id
+
+    })
 }
 
 

@@ -1,9 +1,9 @@
 <template>
     <info-paciente/>
-    <v-container fluid width="800px">
+    <v-container fluid >
         <v-card class="my-2 py-4 text-center teal darken-4">
       <h2 class="grey--text text--lighten-4">
-        FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA
+        FICHA DE EVOLUÇÃO PSICOPEDAGOGIA
       </h2>
     </v-card>
     <v-col class="d-flex justify-start align-center ">
@@ -12,12 +12,13 @@
         
     </v-col>
     <v-col class="d-flex justify-start align-center ">
-        <span class="mx-2 flex-grow-0 pr-2">EGI</span> 
+        <span class="mx-2 flex-grow-0 pr-2">Estado da criança no
+                início da sessão</span> 
         <v-select
         class=""
         multiple
         :items="itensEG"
-        v-model="formSelecionado.egi"
+        v-model="formSelecionado.estadoCriancaInicio"
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -30,36 +31,30 @@
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
-        <span class="mx-2 flex-grow-0">Uso de Tala </span> 
-        <v-select
+        <span class="mx-2 flex-grow-0">Recursos pedagógicos utilizados </span> 
+        <v-text-field
         class="mx-4 "
         :items="itensDeUso"
-        v-model="formSelecionado.tala"
-        ></v-select>
+        v-model="formSelecionado.recursoPedagogicosUtilizados"
+        ></v-text-field>
     </v-col>
     <v-col class="d-flex justify-start align-center">
-        <span class="mx-2 flex-grow-0">Uso de Órtese </span> 
-        <v-select
-        class="mx-4 "
-        :items="itensDeUso"
-        v-model="formSelecionado.ortese"
-        ></v-select>
-    </v-col>
-    <v-col class="d-flex justify-start align-center">
-        <span class="mx-2 flex-grow-0">Relato </span> 
+        <span class="mx-2 flex-grow-0">Relato da sessão </span> 
         <v-text-field
         class="mx-4 "
         :items="itensDeUso"
         v-model="formSelecionado.relato"
         ></v-text-field>
     </v-col>
+    
     <v-col class="d-flex justify-start align-center ">
-        <span class="mx-2 flex-grow-0 pr-2">EGF</span> 
+        <span class="mx-2 flex-grow-0 pr-2">Estado da criança ao
+final da sessão</span> 
         <v-select
         multiple
         class=""
         :items="itensEG"
-        v-model="formSelecionado.egf"
+        v-model="formSelecionado.estadoCriancaFinal"
         ></v-select>
     </v-col>
     <v-col>
@@ -105,7 +100,7 @@ import  { useMyForm} from '@/stores/form'
 
 const router = useRouter()
 const useForm = useMyForm()
-
+const data = ref()
 
 const message = ref('')
       const timeout = ref(2000)
@@ -119,14 +114,15 @@ onBeforeUnmount(()=>{
     useForm.resetForm()
 })
 onMounted(()=>{
-  if(!!useForm.formSelecionado.id){
+   
+    if(!!useForm.formSelecionado.id){
        
 
-      }else{
-          useForm.formSelecionado.dataAplicacao = moment().format('YYYY-MM-DD')
-          useForm.formSelecionado.profissional = getNomeLogin() 
-       
-      }
+    }else{
+        useForm.formSelecionado.dataAplicacao = moment().format('YYYY-MM-DD')
+        useForm.formSelecionado.profissional = getNomeLogin() 
+     
+    }
    
    
 })
@@ -154,7 +150,7 @@ const salvar = (async ()=>{
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
         dataAplicacao: hoje,
-        nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA",
+        nomeForm: "FICHA DE EVOLUÇÃO PSICOPEDAGOGIA",
         formJson: formSelecionado.value,
     }
     await salvarFormulario(body).then((resp)=>{
@@ -177,19 +173,16 @@ const itensDeUso = ref([
     'MMII'
 ])
 const itensCondutas = ref([
-    'Alongamento',
-    'Fortalecimento',
-    'Mobilização',
-    'Equilíbrio/propriocepção',
-    'Estimulação precoce',
-    'Treino de marcha',
-    'Coordenação motora fina',
-    'Habilidades motoras',
-    'Gaiola de habilidades',
-    'Psicomotricidade',
-    'Bobath',
-    'Pediasuit',
-    'Pediasuit Baby'
+    'Treino de coordenação motora fina',
+    'Treino de memória',
+    'Treino de raciocínio lógico',
+    'Treino de sequência lógica',
+    'Treino de foco',
+    'Treino de atenção e concentração',
+    'Treino de cognição',
+    'Treino de linguagem',
+    'Treino de escrita',
+   
 
 
 
