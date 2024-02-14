@@ -4,7 +4,7 @@ import login from '@/pages/login.vue'
 import pacientes from '@/pages/pacientes'
 import formEvolucaoFisioterapeutica from  "@/views/fichaDeEvolucaoFisioterapeutica.vue"
 import fichadeevolucaofisioterapiarespiratoria from "@/views/fichaDeEvolucaoFisioterapiaRespiratoria.vue"
-import fichadeevolucaopsicopedagogia from '@/views/fichadeevolucaopsicopedagogia.vue'
+import fichadeevolucaopsicopedagogia from '@/views/fichaDeEvolucaoPsicopedagogia.vue'
 
 
 
