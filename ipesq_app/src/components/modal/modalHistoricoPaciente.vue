@@ -15,6 +15,15 @@
           
             <v-text-field type="date" v-model="formData.dataInicio" label="Data inicio" outlined></v-text-field>
             <v-text-field type="date" v-model="formData.dataFim" label="Data final" outlined></v-text-field>
+            <VAutocomplete
+            :items="especialidades"
+            item-title="nome"
+            item-value="id"
+            clearable
+            v-model="formData.especialidadeId"
+        
+            />
+            
             
             
             <v-btn class="primary" @click="buscar">BUSCAR<v-icon
@@ -45,14 +54,16 @@
 <script setup>
 import { ref,defineEmits, onMounted,computed  } from 'vue';
 import { useMyPaciente} from '@/stores/paciente'
-import {getFormularios} from '@/modulos/pacientesMethods'
+import {getFormularios, getEspecialidades} from '@/modulos/pacientesMethods'
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import  {useMyForm} from '@/stores/form'
+import {useMyStore} from '@/stores/store'
 
 
 const paciente = useMyPaciente()
 const router = useRouter();
+const storeDB =  useMyStore();
 
 const headers = ref([
       { key: 'dataAplicacao', title: 'data Aplicacao' },
@@ -61,15 +72,20 @@ const headers = ref([
 
 const useForm = useMyForm()
 
+
 const formData = ref({
     dataInicio: moment().format("YYYY-MM-DD"),
     dataFim: moment().format("YYYY-MM-DD"),
+    especialidadeId: ''
   
 });
 const loading = ref(false)
 
 const emit = defineEmits(['close'])
 
+var especialidades = computed(() => {
+  return storeDB.especialidades;
+});
 
 
 var formularios = computed(() => {
@@ -103,6 +119,7 @@ const buscar = (()=>{
     }).catch(()=>{
         loading.value =false
     })
+    
    
 })
 
@@ -114,6 +131,9 @@ const close = (()=>{
 
 onMounted(()=>{
     buscar()
+    getEspecialidades().then((resp)=>{
+        especialidades.value = resp.data
+    })
    
     
 })

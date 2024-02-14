@@ -3,6 +3,8 @@ import axios from 'axios'
 import { URL_API } from '@/ennviroments' 
 import { useMyPaciente} from '@/stores/paciente'
 import { useMyForm } from '@/stores/form';
+import { useMyStore } from '@/stores/store';
+import moment from 'moment';
 
 function getIdUsuario(){
     const myAuth = useMyAuth();
@@ -48,14 +50,34 @@ export async function getFormularios(body){
     const myPaciente = useMyPaciente();
     let id = getIdPaciente();
     let headers = getHeaders();
-    return await axios.get(`${URL_API}Formulario?pacienteId=${id}&dataInicio=${body.dataInicio}&dataFim=${body.dataFim}`, { headers:headers}).then((resp)=>{
+    return await axios.get(`${URL_API}Formulario?pacienteId=${id}&dataInicio=${body.dataInicio}&dataFim=${body.dataFim}${body.especialidadeId? '&especialidadeId='+body.especialidadeId :''}`, { headers:headers}).then((resp)=>{
         let modelPaciente = resp.data.paciente
-        modelPaciente.formularios = resp.data.formularios
+
+        let formulariosFormatter = resp.data.formularios.map((form)=>{
+            
+            return {...form,
+                dataAplicacao: moment(form.dataAplicacao, "YYYY-MM-DD").format("DD/MM/YYYY")
+
+            }
+        })
+        
+        modelPaciente.formularios = formulariosFormatter
         myPaciente.setPacienteSelecionado(modelPaciente);
     })
 
 }
+export async function getEspecialidades(){
+    const storeDB = useMyStore()
+   
+    
+    let token = getHeaders();
+    return await axios.get(`${URL_API}Especialidade`, { headers:token}).then((resp)=>{
+        storeDB.setExpecialidades(resp.data)
 
+        
+    })
+
+}
 export async function getPacientePorId(id){
    
     const myPaciente = useMyPaciente();
@@ -70,7 +92,7 @@ export async function salvarFormulario(model){
     let token = getHeaders();
     model.pacienteId = getIdPaciente();
     model.usuarioId = getIdUsuario();
-    model.especialidadeId = 1
+    model.especialidadeId = getEs
     model.formJson.profissional = getNomeProfissional()
     // model.formJson = JSON.stringify(model.formJson )
     

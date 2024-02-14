@@ -1,14 +1,13 @@
 import { defineStore } from 'pinia'
 
-export const useMyStore = defineStore('myStore', {
+export const useMyStore = defineStore('store', {
   state: () => ({
-    // estado da loja
-    count: 0,
+    especialidades: []
   }),
   actions: {
-    // ações da loja
-    increment() {
-      this.count++
+   
+    setExpecialidades(especialidades) {
+      this.especialidades = especialidades
     },
   },
 })

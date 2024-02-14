@@ -1,11 +1,9 @@
 .maiuscula input {
     text-transform: uppercase;
   }
-  
   .maiuscula {
     text-transform: uppercase;
   }
-  
   .cursor {
     cursor: pointer;
   }
@@ -45,6 +43,5 @@
   }
   .sobrepor {
     position: fixed;
-    
     z-index: 9999; /* Certifique-se de que o z-index seja maior do que o dos elementos abaixo */
   }
