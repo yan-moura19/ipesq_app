@@ -54,7 +54,7 @@
       const message = ref('')
       const timeout = ref(2000)
       const snackbar = ref(false)
-      const show1 = ref(true)
+      const show1 = ref(false)
 
       const myAuth = useMyAuth();
       

@@ -138,20 +138,18 @@
         ></v-icon></button>
         <v-snackbar
       v-model="snackbar"
-      :timeout="timeout"
-    >
+      :timeout="timeout"    >
       {{ message }}
 
-      <template v-slot:actions>
+      <template v-slot:actions >
         <v-btn
           color="blue"
           variant="text"
-          @click="snackbar = false"
-        >
+          @click="snackbar = false">
           Close
         </v-btn>
       </template>
-    </v-snackbar>>
+    </v-snackbar>
     </v-container>
   
 </template>
