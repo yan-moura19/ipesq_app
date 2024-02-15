@@ -62,7 +62,8 @@ const rotas = ref(
   [
     'FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA',
     'FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA',
-     'FICHA DE EVOLUÇÃO PSICOPEDAGOGIA'
+     'FICHA DE EVOLUÇÃO PSICOPEDAGOGIA',
+     'FICHA DE EVOLUÇÃO FISIOTERAPIA/PSICOMOTRICIDADE'
     ]
 )
 
@@ -74,11 +75,15 @@ var pacientes = ref([]);
 var formulario = ref(null)
 
 watch(formulario, (novoValor, valorAntigo) => {
+ 
   var rota =novoValor.trim().toLowerCase()
   rota = rota.replace(/\s/g, "")
   rota = rota.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  if (rota === 'fichadeevolucaofisioterapia/psicomotricidade'){
+    rota = 'fichadeevolucaofisioterapiapsicomotricidade'
+  }
   
-  
+ 
   
   router.push({name: rota})
   

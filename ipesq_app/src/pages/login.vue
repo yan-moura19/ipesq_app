@@ -7,7 +7,13 @@
             <v-card-text>
               <v-form @submit.prevent="login">
                 <v-text-field v-model="usuario" label="Email" outlined></v-text-field>
-                <v-text-field v-model="senha" label="Senha" type="password" outlined></v-text-field>
+                <v-text-field v-model="senha" 
+                label="Senha" 
+                @click:append-inner="show1 = !show1" 
+                :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
+                outlined
+                :type="show1 ? 'text' : 'password'"
+                ></v-text-field>
                 <v-btn :loading="loading" type="submit" color="primary" block>Entrar</v-btn>
               </v-form>
             </v-card-text>
@@ -48,6 +54,7 @@
       const message = ref('')
       const timeout = ref(2000)
       const snackbar = ref(false)
+      const show1 = ref(true)
 
       const myAuth = useMyAuth();
       

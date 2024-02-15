@@ -107,7 +107,9 @@ const handleClick = (event, row)=>{
     rota = rota.replace(/\s/g, "")
     rota = rota.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   
-  
+    if (rota === 'fichadeevolucaofisioterapia/psicomotricidade'){
+    rota = 'fichadeevolucaofisioterapiapsicomotricidade'
+  }
         router.push({name: rota})
 }
 

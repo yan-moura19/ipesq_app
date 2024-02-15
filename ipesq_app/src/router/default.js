@@ -5,6 +5,7 @@ import pacientes from '@/pages/pacientes'
 import formEvolucaoFisioterapeutica from  "@/views/fichaDeEvolucaoFisioterapeutica.vue"
 import fichadeevolucaofisioterapiarespiratoria from "@/views/fichaDeEvolucaoFisioterapiaRespiratoria.vue"
 import fichadeevolucaopsicopedagogia from '@/views/fichaDeEvolucaoPsicopedagogia.vue'
+import fichadeevolucaofisioterapiapsicomotricidade from '@/views/fichaDeEvolucaoFisioterapiaPsicomotricidade.vue'
 
 
 
@@ -44,6 +45,12 @@ export default [
         component: fichadeevolucaopsicopedagogia,
         name: 'fichadeevolucaopsicopedagogia'
       },
+      {
+        path: '/fichadeevolucaofisioterapiapsicomotricidade',
+        component: fichadeevolucaofisioterapiapsicomotricidade,
+        name: 'fichadeevolucaofisioterapiapsicomotricidade'
+      },
+
 
 
 
