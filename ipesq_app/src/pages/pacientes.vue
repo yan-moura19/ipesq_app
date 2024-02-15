@@ -63,7 +63,8 @@ const rotas = ref(
     'FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA',
     'FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA',
      'FICHA DE EVOLUÇÃO PSICOPEDAGOGIA',
-     'FICHA DE EVOLUÇÃO FISIOTERAPIA/PSICOMOTRICIDADE'
+     'FICHA DE EVOLUÇÃO FISIOTERAPIA/PSICOMOTRICIDADE',
+     'FICHA DE EVOLUÇÃO FONOAUDIOLOGIA'
     ]
 )
 
@@ -82,6 +83,7 @@ watch(formulario, (novoValor, valorAntigo) => {
   if (rota === 'fichadeevolucaofisioterapia/psicomotricidade'){
     rota = 'fichadeevolucaofisioterapiapsicomotricidade'
   }
+  console.log(rota)
   
  
   

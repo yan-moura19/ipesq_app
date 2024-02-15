@@ -22,11 +22,11 @@
         ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center">
-        <span class="mx-2 flex-grow-0">Ausculta pulmonar inicial </span> 
+        <span class="mx-2 flex-grow-0">Asculta pulmonar inicial </span> 
         <v-text-field
         class="mx-4 "
         :items="itensDeUso"
-        v-model="formSelecionado.auscultaPulmonarInicial"
+        v-model="formSelecionado.ascultaPulmonarInicial"
         ></v-text-field>
     </v-col>
     <v-col class="d-flex justify-start align-center">
@@ -74,11 +74,11 @@
         ></v-text-field>
     </v-col>
     <v-col class="d-flex justify-start align-center">
-        <span class="mx-2 flex-grow-0">Ausculta pulmonar final </span> 
+        <span class="mx-2 flex-grow-0">Asculta pulmonar final </span> 
         <v-text-field
         class="mx-4 "
         :items="itensDeUso"
-        v-model="formSelecionado.auscultaPulmonarFinal"
+        v-model="formSelecionado.ascultaPulmonarFinal"
         ></v-text-field>
     </v-col>
     

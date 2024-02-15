@@ -6,6 +6,7 @@ import formEvolucaoFisioterapeutica from  "@/views/fichaDeEvolucaoFisioterapeuti
 import fichadeevolucaofisioterapiarespiratoria from "@/views/fichaDeEvolucaoFisioterapiaRespiratoria.vue"
 import fichadeevolucaopsicopedagogia from '@/views/fichaDeEvolucaoPsicopedagogia.vue'
 import fichadeevolucaofisioterapiapsicomotricidade from '@/views/fichaDeEvolucaoFisioterapiaPsicomotricidade.vue'
+import fichadeevolucaofonoaudiologia from '@/views/fichaDeEvolucaoFonoaudiologia.vue'
 
 
 
@@ -49,6 +50,11 @@ export default [
         path: '/fichadeevolucaofisioterapiapsicomotricidade',
         component: fichadeevolucaofisioterapiapsicomotricidade,
         name: 'fichadeevolucaofisioterapiapsicomotricidade'
+      },
+      {
+        path: '/fichadeevolucaofonoaudiologia',
+        component: fichadeevolucaofonoaudiologia,
+        name: 'fichadeevolucaofonoaudiologia'
       },
 
 
