@@ -14,7 +14,10 @@
                 outlined
                 :type="show1 ? 'text' : 'password'"
                 ></v-text-field>
-                <v-btn :loading="loading" type="submit" color="primary" block>Entrar</v-btn>
+                <v-btn :loading="loading" type="submit" color="primary" block>Entrar</v-btn><br/>
+                <v-btn variant="plain" @click="abreModal" class="pl-0">
+          <span>Esqueceu a senha?</span>
+        </v-btn>
               </v-form>
             </v-card-text>
           </v-card>
@@ -37,6 +40,10 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <modal-redefinir-senha
+    v-model="modal"
+    @close="closeModal"
+    />
     </v-container>
   </template>
   <script setup>
@@ -55,10 +62,19 @@
       const timeout = ref(2000)
       const snackbar = ref(false)
       const show1 = ref(false)
+      const modal = ref(false)
 
       const myAuth = useMyAuth();
       
-      
+
+      const closeModal = (()=>{
+  modal.value = false
+  
+})
+const abreModal = (()=>{
+  modal.value =true
+})
+
       const resetPaciente = (()=>{
       paciente.resetPacienteSelecionado()
     })
@@ -74,7 +90,7 @@
           router.push('/paciente');
           loading.value = false
         }).catch((err)=>{
-          console.log(err.response.data)
+          
           message.value = err.response.data
           loading.value = false
           snackbar.value = true

@@ -7,6 +7,7 @@ import fichadeevolucaofisioterapiarespiratoria from "@/views/fichaDeEvolucaoFisi
 import fichadeevolucaopsicopedagogia from '@/views/fichaDeEvolucaoPsicopedagogia.vue'
 import fichadeevolucaofisioterapiapsicomotricidade from '@/views/fichaDeEvolucaoFisioterapiaPsicomotricidade.vue'
 import fichadeevolucaofonoaudiologia from '@/views/fichaDeEvolucaoFonoaudiologia.vue'
+import definirSenha from '@/pages/definirSenha.vue'
 
 
 
@@ -16,9 +17,15 @@ export default [
         component: tese
   
       },
+
       {
         path: '/index',
         component: index
+  
+      },
+      {
+        path: '/definir-senha',
+        component: definirSenha
   
       },
       {

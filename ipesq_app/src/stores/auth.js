@@ -7,6 +7,7 @@ export const useMyAuth = defineStore('authLogin', {
     user: {},
     estaAutenticado: false,
     headers: '',
+    definirSenha: {}
   }),
   actions: {
     // ações da loja
@@ -18,6 +19,17 @@ export const useMyAuth = defineStore('authLogin', {
 
         })
       
+    },
+    setRedefinirSenha(nome, token, email ){
+      this.definirSenha = {
+        nome: nome,
+        token: token,
+        email: email,
+      }
+
+    },
+    resetDefinirSenha(){
+      this.definirSenha = {}
     },
     resetAuth(){
       this.user = {}

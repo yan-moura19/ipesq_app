@@ -83,7 +83,7 @@ watch(formulario, (novoValor, valorAntigo) => {
   if (rota === 'fichadeevolucaofisioterapia/psicomotricidade'){
     rota = 'fichadeevolucaofisioterapiapsicomotricidade'
   }
-  console.log(rota)
+ 
   
  
   

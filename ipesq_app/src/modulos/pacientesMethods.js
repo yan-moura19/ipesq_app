@@ -5,6 +5,7 @@ import { useMyPaciente} from '@/stores/paciente'
 import { useMyForm } from '@/stores/form';
 import { useMyStore } from '@/stores/store';
 import moment from 'moment';
+import VueJwtDecode from 'vue-jwt-decode';
 
 function getIdUsuario(){
     const myAuth = useMyAuth();
@@ -23,6 +24,11 @@ function getIdPaciente(){
     return myPaciente.pacienteSelecionado.id
 
 }
+function getNomePaciente(){
+    const myPaciente = useMyPaciente();
+    return myPaciente.pacienteSelecionado.nome
+
+}
 function setFormSelecionado(form){
     const formDb = useMyForm()
     let formFormatter = JSON.parse(form)
@@ -34,6 +40,30 @@ export function getNomeLogin(){
     return myAuth.user.nome;
 
     
+}
+export async function patchSenha( senha){
+    const myAuth = useMyAuth();
+    let headers = getHeaders();
+    let token = myAuth.definirSenha.token
+
+    return await axios.patch(`${URL_API}Usuario/definirSenha?token=${token}&novaSenha=${senha}`,null, { headers:headers}).then(()=>{
+        const myAuth = useMyAuth();
+        myAuth.resetDefinirSenha()
+    })
+
+}
+export async function enviarEmail( email){
+    return await axios.post(`${URL_API}Usuario/redifinirSenha?email=${email}`).then(()=>{     
+        
+    })
+
+}
+export function setToken(token){
+    let decoded = VueJwtDecode.decode(token)
+    let nome = decoded.unique_name
+    let email = decoded.email
+    const myAuth = useMyAuth();
+    myAuth.setRedefinirSenha(nome, token, email)
 }
 
 export async function atualizaFormulario(form){
@@ -93,7 +123,9 @@ export async function salvarFormulario(model){
     model.pacienteId = getIdPaciente();
     model.usuarioId = getIdUsuario();
     
+    
     model.formJson.profissional = getNomeProfissional()
+    model.formJson.nomePaciente = getNomePaciente()
     // model.formJson = JSON.stringify(model.formJson )
     
 
