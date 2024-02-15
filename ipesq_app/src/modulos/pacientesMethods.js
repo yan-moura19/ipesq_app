@@ -92,7 +92,7 @@ export async function salvarFormulario(model){
     let token = getHeaders();
     model.pacienteId = getIdPaciente();
     model.usuarioId = getIdUsuario();
-    model.especialidadeId = getEs
+    
     model.formJson.profissional = getNomeProfissional()
     // model.formJson = JSON.stringify(model.formJson )
     
