@@ -152,6 +152,7 @@ const salvar = (async ()=>{
         dataAplicacao: hoje,
         nomeForm: "FICHA DE EVOLUÇÃO PSICOPEDAGOGIA",
         formJson: formSelecionado.value,
+        especialidadeId: 3
     }
     await salvarFormulario(body).then((resp)=>{
         snackbar.value = true

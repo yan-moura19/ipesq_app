@@ -222,6 +222,7 @@ const salvar = (async ()=>{
         dataAplicacao: hoje,
         nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA",
         formJson: formSelecionado.value,
+        especialidadeId: 1
     }
     await salvarFormulario(body).then((resp)=>{
         snackbar.value = true
