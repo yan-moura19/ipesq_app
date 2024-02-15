@@ -8,7 +8,7 @@
                     mdi-close-circle-outline
                     </v-icon>
                 </span>
-        <h1 class="text-center">Cadastrar paciente</h1>
+        <h1 class="text-center">EMAIL REDEFINIR SENHA</h1>
         <br>
        
             

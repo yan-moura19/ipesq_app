@@ -70,7 +70,7 @@ const redefinirSenha = (()=>{
         message.value = 'As senhas devem ser iguais'
         return
     }else{
-        patchSenha(senha).then(()=>{
+        patchSenha(senha.value).then(()=>{
             snackbar.value = true
         message.value = 'A senha foi alterada'
         setTimeout(function() {
