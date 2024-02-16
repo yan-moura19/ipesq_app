@@ -125,7 +125,7 @@
     </v-col>
     <v-col cols="12">
         
-        <v-row v-if="!!formSelecionado.id" class="d-flex justify-end"><v-btn color="primary" @click="editar">SALVAR ALTERAÇÕES</v-btn></v-row>
+        <v-row v-if="!!formSelecionado.id" class="d-flex justify-end"></v-row>
         <v-row v-else class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
 
     </v-col>
