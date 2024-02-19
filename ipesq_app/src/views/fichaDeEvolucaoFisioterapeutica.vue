@@ -12,6 +12,15 @@
         
     </v-col>
     <v-col class="d-flex justify-start align-center ">
+        <span class="mx-2 flex-grow-0 pr-2">Faltou?</span> 
+        <v-select
+        class=""
+ 
+        :items="['Sim','Não']"
+        v-model="formSelecionado.falta"
+        ></v-select>
+    </v-col>
+    <v-col class="d-flex justify-start align-center ">
         <span class="mx-2 flex-grow-0 pr-2">EGI</span> 
         <v-select
         class=""

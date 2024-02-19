@@ -7,10 +7,20 @@
 
       </h2>
     </v-card>
+    
     <v-col class="d-flex justify-start align-center ">
         <span class="mx-2 flex-grow-0 pr-2">Data de aplicação</span> 
         <v-text-field type="date" v-model="formSelecionado.dataAplicacao" label="Data aplicação" outlined></v-text-field>
         
+    </v-col>
+    <v-col class="d-flex justify-start align-center ">
+        <span class="mx-2 flex-grow-0 pr-2">Faltou?</span> 
+        <v-select
+        class=""
+ 
+        :items="['Sim','Não']"
+        v-model="formSelecionado.falta"
+        ></v-select>
     </v-col>
     <v-col class="d-flex justify-start align-center ">
         <span class="mx-2 flex-grow-0 pr-2">Estado da criança no
