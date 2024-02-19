@@ -42,6 +42,7 @@
         <span class="mx-2 flex-grow-0">Uso de Tala </span> 
         <v-select
         class="mx-4 "
+        multiple
         :items="itensDeUso"
         v-model="formSelecionado.tala"
         ></v-select>
@@ -50,6 +51,7 @@
         <span class="mx-2 flex-grow-0">Uso de Órtese </span> 
         <v-select
         class="mx-4 "
+        multiple
         :items="itensDeUso"
         v-model="formSelecionado.ortese"
         ></v-select>
