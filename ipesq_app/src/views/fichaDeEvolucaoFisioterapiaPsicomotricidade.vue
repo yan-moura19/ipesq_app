@@ -73,7 +73,7 @@ final da sessão</span>
     </v-col>
     <v-col cols="12">
         <v-row v-if="!!formSelecionado.id" class="d-flex justify-end"></v-row>
-        <v-row v-else class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
+        <v-row v-else class="d-flex justify-end"><v-btn color="primary" :loading="loading" @click="salvar">SALVAR</v-btn></v-row>
 
     </v-col>
     <button class="floating-button-esquerda" @click="voltar"> <v-icon
@@ -115,6 +115,7 @@ const useForm = useMyForm()
 const message = ref('')
       const timeout = ref(2000)
       const snackbar = ref(false)
+      const loading = ref(false)
 
 
 var formSelecionado = computed(() => {
@@ -155,6 +156,7 @@ const editar = (()=>{
 
 })
 const salvar = (async ()=>{
+    loading.value = true
     
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
@@ -164,12 +166,14 @@ const salvar = (async ()=>{
         especialidadeId: 1
     }
     await salvarFormulario(body).then((resp)=>{
+        loading.value = false
         snackbar.value = true
       message.value = 'Formulário salvo'
 
     }).catch(()=>{
         snackbar.value = true
         message.value = 'Não foi possivel salvar'
+        loading.value = false
        
     })
 
