@@ -78,8 +78,13 @@
         
     </v-col>
     <v-col cols="12">
-        <v-row v-if="!!formSelecionado.id" class="d-flex justify-end">
-       
+        <v-row v-if="!!formSelecionado.id && hoje === formSelecionado.dataAplicacao" class="d-flex justify-end">
+            <v-btn color="primary" @click="salvar">SALVAR ALTERAÇÕES</v-btn>
+            
+        </v-row>
+        <v-row v-else-if="!!formSelecionado.id && !(hoje === formSelecionado.dataAplicacao)" class="d-flex justify-end">
+            
+            
         </v-row>
         <v-row v-else class="d-flex justify-end"><v-btn color="primary" :loading="loading" @click="salvar">SALVAR</v-btn></v-row>
 
@@ -120,6 +125,7 @@ import  { useMyForm} from '@/stores/form'
 const router = useRouter()
 const useForm = useMyForm()
 
+const hoje = moment().format("YYYY-MM-DD")
 
 const message = ref('')
       const timeout = ref(2000)
@@ -136,7 +142,6 @@ onBeforeUnmount(()=>{
 })
 onMounted(()=>{
   if(!!useForm.formSelecionado.id){
-       
 
       }else{
           useForm.formSelecionado.dataAplicacao = moment().format('YYYY-MM-DD')

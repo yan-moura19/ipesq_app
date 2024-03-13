@@ -226,14 +226,17 @@ final da sessão</span>
         
     </v-col>
     <v-col cols="12">
-        <v-row v-if="!!formSelecionado.id" class="d-flex justify-end"></v-row>
-        <v-row v-else class="d-flex justify-end"><v-btn color="primary" :loading="loading" @click="salvar">SALVAR</v-btn></v-row>
+        <v-row v-if="!!formSelecionado.id && hoje === formSelecionado.dataAplicacao" class="d-flex justify-end">
+        <v-btn color="primary" @click="salvar">SALVAR ALTERAÇÕES</v-btn></v-row>
+        <v-row v-else-if="!!formSelecionado.id && !(hoje === formSelecionado.dataAplicacao)" class="d-flex justify-end"></v-row>
+        <v-row v-else class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
 
     </v-col>
     <button class="floating-button-esquerda" @click="voltar"> <v-icon
           start
           icon="mdi-arrow-left"
-        ></v-icon></button>
+        ></v-icon>
+    </button>
         <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
@@ -274,7 +277,7 @@ const message = ref('')
         'Ruidosa',
         'sem alterações'
     ])
-
+    const hoje = moment().format("YYYY-MM-DD")
 const itensSinaisClinicos = ref([
     'Tosse',
     'Pigarro',

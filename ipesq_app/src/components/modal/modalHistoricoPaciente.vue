@@ -134,7 +134,9 @@ const close = (()=>{
 onMounted(()=>{
     buscar()
     getEspecialidades().then((resp)=>{
-        especialidades.value = resp.data
+        if (resp && resp.data) {
+        especialidades.value = resp.data;
+    }
     })
    
     
