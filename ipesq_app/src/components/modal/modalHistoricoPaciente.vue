@@ -26,10 +26,13 @@
         
             /></v-col>
                 <v-col cols="2"  > 
-            <v-btn class="primary"  @click="buscar"><v-icon
-          
-          icon="mdi-magnify"
-        ></v-icon></v-btn></v-col>
+                    <v-btn class="primary"
+                     @click="buscar">
+                        <v-icon
+                        size="40"
+                
+                icon="mdi-magnify"
+                ></v-icon></v-btn></v-col>
             </v-row>
            
             
