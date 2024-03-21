@@ -1,5 +1,5 @@
 <template> 
-  <v-card>
+  <v-card class="sobrepor">
       <v-app-bar
         color="primary"
         
@@ -10,27 +10,48 @@
         <v-spacer></v-spacer>
         <v-btn variant="text" icon="mdi-logout" @click="sair"></v-btn>
       </v-app-bar>
-      <v-navigation-drawer
-        :width="tamanho? 200: 200"
-        
-      >
-        <v-list>
-          <v-list-item
-            
-            title="Sandra Adams"
-          
-          ></v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-folder" title="My Files" value="myfiles"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+      
  
   </v-card>
+  <v-bottom-navigation>
+   
   
+  <v-menu>
+      <template v-slot:activator="{ props }">
+        <v-btn
+          color="primary"
+          v-bind="props"
+          value="Novo forms"
+        >
+        <v-icon>mdi-file-document-plus-outline</v-icon>
+        <span>Novo formulário</span>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="(item, index) in rotas"
+          :key="index"
+          :value="index"
+        >
+          <v-list-item-title>{{ item }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    <v-btn value="home">
+    <v-icon>mdi-home</v-icon>
+
+    <span>Inicio</span>
+  </v-btn>
+
+  <v-btn value="favorites">
+    <v-icon>mdi-account-details</v-icon>
+
+    <span>Historico</span>
+  </v-btn>
+  
+
+  
+</v-bottom-navigation>
   
   </template>
 
@@ -45,6 +66,16 @@ import { useRoute, useRouter } from 'vue-router';
     const tamanho = ref(true);
     const rail = ref(true);
     const router = useRouter();
+    const rotas = ref(
+  [
+    'FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA',
+    'FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA',
+     'FICHA DE EVOLUÇÃO PSICOPEDAGOGIA',
+     'FICHA DE EVOLUÇÃO FISIOTERAPIA/PSICOMOTRICIDADE',
+     'FICHA DE EVOLUÇÃO FONOAUDIOLOGIA',
+     'ACOMPANHAMENTO MENSAL'
+    ]
+)
 
     const sair = () => {
       

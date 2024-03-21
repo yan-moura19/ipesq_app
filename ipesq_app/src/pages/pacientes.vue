@@ -2,7 +2,7 @@
     <v-container>
       <v-row >
         
-        <v-col cols="12">
+        <v-col cols="10">
           <VAutocomplete
         :items="pacientes"
         item-title="nome"
@@ -12,10 +12,16 @@
         >
         </VAutocomplete>
         
-        <v-btn  @click="abreModal">Novo Paciente</v-btn>
+       
        
         
       </v-col>
+      <v-col cols="2" > <v-btn size="55" @click="abreModal">
+        <v-icon
+         
+          icon="mdi-account-plus"
+        ></v-icon></v-btn></v-col>
+     
         
 
       </v-row>
