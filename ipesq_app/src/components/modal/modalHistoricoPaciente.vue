@@ -26,7 +26,7 @@
         
             /></v-col>
                 <v-col cols="2"  > 
-                    <v-btn class="primary"
+                    <v-btn class="primary" 
                      @click="buscar">
                         <v-icon
                         size="40"
