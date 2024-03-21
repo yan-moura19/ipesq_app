@@ -1,5 +1,5 @@
 <template>
-    <v-dialog  class="maiuscula" transition="dialog-top-transition" width="80%" >
+    <v-dialog  class="maiuscula" transition="dialog-top-transition" width="80%" height="85%">
         
 
         <v-card class="px-4 py-4">
@@ -8,42 +8,63 @@
                     mdi-close-circle-outline
                     </v-icon>
                 </span>
-        <h1 class="text-center maiuscula">Histórico de formulários</h1>
+        <h1 class="text-center maiuscula">Histórico</h1>
         <br>
        
             
           
             <v-text-field type="date" v-model="formData.dataInicio" label="Data inicio" outlined></v-text-field>
             <v-text-field type="date" v-model="formData.dataFim" label="Data final" outlined></v-text-field>
-            <VAutocomplete
+
+            <v-row>
+                <v-col cols="9"> <VAutocomplete
             :items="especialidades"
             item-title="nome"
             item-value="id"
             clearable
             v-model="formData.especialidadeId"
         
-            />
-            
-            
-            
-            <v-btn class="primary" @click="buscar">BUSCAR<v-icon
-          end
+            /></v-col>
+                <v-col cols="2"  > 
+            <v-btn class="primary"  @click="buscar"><v-icon
+          
           icon="mdi-magnify"
-        ></v-icon></v-btn>
+        ></v-icon></v-btn></v-col>
+            </v-row>
+           
             
-            
-        <v-data-table
-            :headers="headers"
-            :items="formularios"
-            :loading="loading"
-            loading-text="Carregando formulários"
-            no-data-text="O usuário não possui formulários"
-            @click:row="handleClick"
-            :items-per-page="5"
             
            
-            >
-        </v-data-table>
+            
+            
+            <v-data-table
+    v-model:page="page"
+    :headers="headers"
+    :items="formularios"
+    :items-per-page="itemsPerPage"
+  >
+    <!-- <template v-slot:top>
+      <v-text-field
+        v-model="itemsPerPage"
+        class="pa-2"
+        label="Itens por página"
+        max="15"
+        min="-1"
+        type="number"
+        hide-details
+      ></v-text-field>
+    </template> -->
+
+    <template v-slot:bottom>
+      <div class="text-center pt-2">
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+        ></v-pagination>
+      
+      </div>
+    </template>
+  </v-data-table>
 
 
         </v-card>
@@ -71,6 +92,9 @@ const headers = ref([
     ]);
 
 const useForm = useMyForm()
+const pageCount = computed(() => {return Math.ceil(formularios.value.length / 5)});
+const page = ref(1);
+    const itemsPerPage = ref(5); // Quantidade padrão de itens por página
 
 
 const formData = ref({
