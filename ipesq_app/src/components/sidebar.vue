@@ -32,12 +32,13 @@
           v-for="(item, index) in rotas"
           :key="index"
           :value="index"
+          @click="irParaNovoFormulario(item)"
         >
           <v-list-item-title>{{ item }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-btn value="home">
+    <v-btn value="home" @click="inicio">
     <v-icon>mdi-home</v-icon>
 
     <span>Inicio</span>
@@ -76,11 +77,27 @@ import { useRoute, useRouter } from 'vue-router';
      'ACOMPANHAMENTO MENSAL'
     ]
 )
-
+function irParaNovoFormulario(item) {
+  var rota =item.trim().toLowerCase()
+  rota = rota.replace(/\s/g, "")
+  rota = rota.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  if (rota === 'fichadeevolucaofisioterapia/psicomotricidade'){
+    rota = 'fichadeevolucaofisioterapiapsicomotricidade'
+  }
+ 
+  
+ 
+  
+  router.push({name: rota})
+}
     const sair = () => {
       
        router.push('/');
     };
+    const inicio = () => {
+      
+      router.push('/paciente');
+   };
 
     watch(group, () => {
       drawer.value = false;
