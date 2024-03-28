@@ -231,7 +231,7 @@ const salvar = (async ()=>{
     
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
-        dataAplicacao: hoje,
+        dataAplicacao: useForm.formSelecionado.dataAplicacao,
         nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPIA RESPIRATÓRIA",
         formJson: formSelecionado.value,
         especialidadeId: 1

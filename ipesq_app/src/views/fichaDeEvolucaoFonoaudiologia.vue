@@ -334,7 +334,7 @@ const salvar = (async ()=>{
     
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
-        dataAplicacao: hoje,
+        dataAplicacao: useForm.formSelecionado.dataAplicacao,
         nomeForm: "FICHA DE EVOLUÇÃO FONOAUDIOLOGIA",
         formJson: formSelecionado.value,
         especialidadeId: 2

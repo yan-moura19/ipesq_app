@@ -173,9 +173,10 @@ const editar = (()=>{
 const salvar = (async ()=>{
     loading.value = true
     
+    
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
-        dataAplicacao: hoje,
+        dataAplicacao:  useForm.formSelecionado.dataAplicacao,
         nomeForm: "FICHA DE EVOLUÇÃO FISIOTERAPÊUTICA",
         formJson: formSelecionado.value,
         especialidadeId: 1

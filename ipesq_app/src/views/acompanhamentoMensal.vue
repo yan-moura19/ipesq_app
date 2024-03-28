@@ -243,7 +243,8 @@ const salvar = (async ()=>{
     
     let hoje = moment().format('YYYY-MM-DD');
     let body = {  
-        dataAplicacao: hoje,
+        dataAplicacao: useForm.formSelecionado.dataAplicacao,
+
         nomeForm: "ACOMPANHAMENTO MENSAL",
         formJson: formSelecionado.value,
         especialidadeId: 1
