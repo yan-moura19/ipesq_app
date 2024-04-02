@@ -17,14 +17,15 @@
             <v-text-field type="date" v-model="formData.dataFim" label="Data final" outlined></v-text-field>
 
             <v-row>
-                <v-col cols="9"> <VAutocomplete
-            :items="especialidades"
-            item-title="nome"
-            item-value="id"
-            clearable
-            v-model="formData.especialidadeId"
-        
-            /></v-col>
+                <v-col cols="9"> 
+                  <VAutocomplete
+                    :items="especialidades"
+                    item-title="nome"
+                    item-value="id"
+                    clearable
+                    v-model="formData.especialidadeId"
+                
+                    /></v-col>
                 <v-col cols="2"  > 
                     <v-btn class="primary" 
                      @click="buscar">
@@ -65,6 +66,7 @@
           :length="pageCount"
         ></v-pagination>
       
+     
       </div>
     </template>
   </v-data-table>
@@ -88,6 +90,9 @@ import {useMyStore} from '@/stores/store'
 const paciente = useMyPaciente()
 const router = useRouter();
 const storeDB =  useMyStore();
+var formularios = computed(() => {
+  return paciente.pacienteSelecionado.formularios || [];
+});
 
 const headers = ref([
       { key: 'dataAplicacao', title: 'data Aplicacao' },
@@ -95,6 +100,7 @@ const headers = ref([
     ]);
 
 const useForm = useMyForm()
+
 const pageCount = computed(() => {return Math.ceil(formularios.value.length / 5)});
 const page = ref(1);
     const itemsPerPage = ref(5); // Quantidade padrão de itens por página
@@ -115,9 +121,6 @@ var especialidades = computed(() => {
 });
 
 
-var formularios = computed(() => {
-  return paciente.pacienteSelecionado.formularios;
-});
 
 
 

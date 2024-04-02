@@ -27,7 +27,7 @@
       </v-row>
       
       <info-paciente/>
-      <v-card class="mt-2 align-center text-center" v-if="!!paciente.pacienteSelecionado.nome">
+      <!-- <v-card class="mt-2 align-center text-center" v-if="!!paciente.pacienteSelecionado.nome">
         <h4 class="mt-2 ml-2">NOVO FORMULÁRIO</h4>
           <v-select
           class="ml-2 mr-2 mt-2"
@@ -35,7 +35,7 @@
           v-model="formulario"
           ></v-select>
           <v-btn class="mb-2 ml-2 mr-8" block @click="abreModalHistorico">Historico de FORMULÁRIO</v-btn>
-      </v-card>
+      </v-card> -->
       
       <modal-cadastrar-paciente
       
