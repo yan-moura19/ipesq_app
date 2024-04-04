@@ -5,7 +5,7 @@
         
         floating
       >
-        <v-app-bar-nav-icon variant="text" @click="tamanho = !tamanho"></v-app-bar-nav-icon>
+        <!-- <v-app-bar-nav-icon variant="text" @click="tamanho = !tamanho"></v-app-bar-nav-icon> -->
         <v-toolbar-title>IPESQ</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn variant="text" icon="mdi-logout" @click="sair"></v-btn>
