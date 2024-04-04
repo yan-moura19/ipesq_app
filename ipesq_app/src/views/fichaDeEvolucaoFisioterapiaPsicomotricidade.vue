@@ -83,10 +83,10 @@ final da sessão</span>
         <v-row v-else class="d-flex justify-end"><v-btn color="primary" @click="salvar">SALVAR</v-btn></v-row>
 
     </v-col>
-    <button class="floating-button-esquerda" @click="voltar"> <v-icon
+    <!-- <button class="floating-button-esquerda" @click="voltar"> <v-icon
           start
           icon="mdi-arrow-left"
-        ></v-icon></button>
+        ></v-icon></button> -->
         <v-snackbar
       v-model="snackbar"
       :timeout="timeout"

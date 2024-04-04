@@ -2,7 +2,7 @@
     <info-paciente/>
     <v-container fluid width="800px">
         <v-card class="my-2 py-4 text-center teal darken-4">
-      <h2 class="grey--text text--lighten-4">
+      <h2 class="grey--text text--lighten-4 maiuscula">
         Acompanhamento mensal
       </h2>
     </v-card>
@@ -120,7 +120,7 @@
         ></v-select>
        
     </v-col>
-    <v-col   v-if="formSelecionado.tiposIntecorrencia.includes('Outros')"
+    <v-col   v-if="tiposIntecorrencias.includes('Outros')"
      class="d-flex justify-start align-center">
      <span class="mx-2 flex-grow-0">Outros (Intercorrência) </span> 
         <v-text-field
@@ -157,10 +157,10 @@
     </v-col>
 
     </v-col>
-    <button class="floating-button-esquerda" @click="voltar"> <v-icon
+    <!-- <button class="floating-button-esquerda" @click="voltar"> <v-icon
           start
           icon="mdi-arrow-left"
-        ></v-icon></button>
+        ></v-icon></button> -->
         <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
@@ -200,6 +200,10 @@ const message = ref('')
       const loading = ref(false)
       
       const hoje = moment().format("YYYY-MM-DD")
+
+var tiposIntecorrencias = computed(() => {
+  return useForm.formSelecionado.tiposIntecorrencia || [];
+});
 
 var formSelecionado = computed(() => {
   return useForm.formSelecionado;
