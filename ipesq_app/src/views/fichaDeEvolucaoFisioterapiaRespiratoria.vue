@@ -143,10 +143,10 @@
     
     
     
-    <button class="floating-button-esquerda" @click="voltar"> <v-icon
+    <!-- <button class="floating-button-esquerda" @click="voltar"> <v-icon
           start
           icon="mdi-arrow-left"
-        ></v-icon></button>
+        ></v-icon></button> -->
         <v-snackbar
       v-model="snackbar"
       :timeout="timeout"    >
