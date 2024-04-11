@@ -1,5 +1,5 @@
 <template>
-    <v-dialog  class="maiuscula" transition="dialog-top-transition" width="80%" >
+    <v-dialog  class="maiuscula" transition="dialog-top-transition" width="80%" height="85%">
         
 
         <v-card class="px-4 py-4">
@@ -8,42 +8,68 @@
                     mdi-close-circle-outline
                     </v-icon>
                 </span>
-        <h1 class="text-center maiuscula">Histórico de formulários</h1>
+        <h1 class="text-center maiuscula">Histórico</h1>
         <br>
        
             
           
             <v-text-field type="date" v-model="formData.dataInicio" label="Data inicio" outlined></v-text-field>
             <v-text-field type="date" v-model="formData.dataFim" label="Data final" outlined></v-text-field>
-            <VAutocomplete
-            :items="especialidades"
-            item-title="nome"
-            item-value="id"
-            clearable
-            v-model="formData.especialidadeId"
-        
-            />
+
+            <v-row>
+                <v-col cols="9"> 
+                  <VAutocomplete
+                    :items="especialidades"
+                    item-title="nome"
+                    item-value="id"
+                    clearable
+                    v-model="formData.especialidadeId"
+                
+                    /></v-col>
+                <v-col cols="2"  > 
+                    <v-btn class="primary" 
+                     @click="buscar">
+                        <v-icon
+                        size="40"
+                
+                icon="mdi-magnify"
+                ></v-icon></v-btn></v-col>
+            </v-row>
+           
             
-            
-            
-            <v-btn class="primary" @click="buscar">BUSCAR<v-icon
-          end
-          icon="mdi-magnify"
-        ></v-icon></v-btn>
-            
-            
-        <v-data-table
-            :headers="headers"
-            :items="formularios"
-            :loading="loading"
-            loading-text="Carregando formulários"
-            no-data-text="O usuário não possui formulários"
-            @click:row="handleClick"
-            :items-per-page="5"
             
            
-            >
-        </v-data-table>
+            
+            
+            <v-data-table
+    v-model:page="page"
+    :headers="headers"
+    :items="formularios"
+    :items-per-page="itemsPerPage"
+  >
+    <!-- <template v-slot:top>
+      <v-text-field
+        v-model="itemsPerPage"
+        class="pa-2"
+        label="Itens por página"
+        max="15"
+        min="-1"
+        type="number"
+        hide-details
+      ></v-text-field>
+    </template> -->
+
+    <template v-slot:bottom>
+      <div class="text-center pt-2">
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+        ></v-pagination>
+      
+     
+      </div>
+    </template>
+  </v-data-table>
 
 
         </v-card>
@@ -64,6 +90,9 @@ import {useMyStore} from '@/stores/store'
 const paciente = useMyPaciente()
 const router = useRouter();
 const storeDB =  useMyStore();
+var formularios = computed(() => {
+  return paciente.pacienteSelecionado.formularios || [];
+});
 
 const headers = ref([
       { key: 'dataAplicacao', title: 'data Aplicacao' },
@@ -71,6 +100,10 @@ const headers = ref([
     ]);
 
 const useForm = useMyForm()
+
+const pageCount = computed(() => {return Math.ceil(formularios.value.length / 5)});
+const page = ref(1);
+    const itemsPerPage = ref(5); // Quantidade padrão de itens por página
 
 
 const formData = ref({
@@ -88,9 +121,6 @@ var especialidades = computed(() => {
 });
 
 
-var formularios = computed(() => {
-  return paciente.pacienteSelecionado.formularios;
-});
 
 
 
@@ -134,7 +164,9 @@ const close = (()=>{
 onMounted(()=>{
     buscar()
     getEspecialidades().then((resp)=>{
-        especialidades.value = resp.data
+        if (resp && resp.data) {
+        especialidades.value = resp.data;
+    }
     })
    
     

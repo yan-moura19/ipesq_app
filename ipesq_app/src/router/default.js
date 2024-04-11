@@ -7,6 +7,7 @@ import fichadeevolucaofisioterapiarespiratoria from "@/views/fichaDeEvolucaoFisi
 import fichadeevolucaopsicopedagogia from '@/views/fichaDeEvolucaoPsicopedagogia.vue'
 import fichadeevolucaofisioterapiapsicomotricidade from '@/views/fichaDeEvolucaoFisioterapiaPsicomotricidade.vue'
 import fichadeevolucaofonoaudiologia from '@/views/fichaDeEvolucaoFonoaudiologia.vue'
+import acompanhamentomensal from '@/views/acompanhamentoMensal.vue'
 import definirSenha from '@/pages/definirSenha.vue'
 
 
@@ -62,6 +63,11 @@ export default [
         path: '/fichadeevolucaofonoaudiologia',
         component: fichadeevolucaofonoaudiologia,
         name: 'fichadeevolucaofonoaudiologia'
+      },
+      {
+        path: '/acompanhamentomensal',
+        component: acompanhamentomensal,
+        name: 'acompanhamentomensal'
       },
 
 

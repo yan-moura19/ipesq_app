@@ -77,9 +77,9 @@ const salvarPaciente =(()=>{
       message.value = 'paciente salvo'
      
         
-    }).catch(()=>{
+    }).catch((err)=>{
       snackbar.value = true
-      message.value = 'Erro ao salvar paciente'
+      message.value = err.response.data
        
     })
 })
