@@ -96,6 +96,31 @@ export async function getFormularios(body){
     })
 
 }
+export async function getFormulariosMes(body){
+    const myPaciente = useMyPaciente();
+    let id = getIdPaciente();
+    let headers = getHeaders();
+    let primeiroDiaDoMes = moment().startOf('month');
+    let  dataAtual = moment();
+    primeiroDiaDoMes = primeiroDiaDoMes.format('YYYY-MM-DD')
+    dataAtual = dataAtual.format('YYYY-MM-DD')
+    return await axios.get(`${URL_API}Formulario?pacienteId=${id}&dataInicio=${primeiroDiaDoMes}&dataFim=${dataAtual}`, { headers:headers}).then((resp)=>{
+        let modelPaciente = resp.data.paciente
+
+        let formulariosFormatter = resp.data.formularios.map((form)=>{
+            
+            return {...form,
+                dataAplicacao: moment(form.dataAplicacao, "YYYY-MM-DD").format("DD/MM/YYYY")
+
+            }
+        })
+        
+        modelPaciente.formulariosMes = formulariosFormatter
+        myPaciente.setPacienteSelecionado(modelPaciente);
+    })
+
+
+}
 export async function getEspecialidades(){
     const storeDB = useMyStore()
    
