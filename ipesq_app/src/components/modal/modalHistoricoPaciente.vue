@@ -46,6 +46,8 @@
     :headers="headers"
     :items="formularios"
     :items-per-page="itemsPerPage"
+    @click:row="handleClick"
+
   >
     <!-- <template v-slot:top>
       <v-text-field
@@ -141,6 +143,7 @@ const handleClick = (event, row)=>{
     rota = 'fichadeevolucaofisioterapiapsicomotricidade'
   }
         router.push({name: rota})
+        close()
 }
 
 const buscar = (()=>{
