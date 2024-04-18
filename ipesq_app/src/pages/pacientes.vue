@@ -27,14 +27,18 @@
       </v-row>
       
       <info-paciente/>
-      
-      <v-card class="mt-3 ml-2 mr-2 align-center text-center " v-if="!!paciente.pacienteSelecionado.nome && !semForm && countFormularios>1">
+      {{ !!pacienteComp.nome && !semForm && countFormularios>1 }} - 
+      {{  !semForm  }} -
+      {{  countFormularios>1 }} -
+      {{ pacienteComp.nome }}
+      <v-card class="mt-3 ml-2 mr-2 align-center text-center " v-if="!!pacienteComp.nome && !semForm && countFormularios>1">
        
-      <h3 class="text-h6">
-        Este mês, sob os cuidados do IPESQ,
-        <span class="font-weight-bold">{{ paciente.pacienteSelecionado.nome }}</span>
-        voltou para casa em um estado tranquilo e colaborativo em
-        <span class="font-weight-bold">{{ countSaiuBem }}</span> das {{ countFormularios }} sessões.
+      <h3  class="text-h6 text-left ml-2">
+        Este mês foram {{ countFormularios }} sessões <br>
+        
+        Saiu tranquilo e colaborativo em {{ countSaiuBem }} <br>
+
+        <!-- <span class="font-weight-bold">{{ countSaiuBem }}</span> das {{ countFormularios }} sessões. -->
       </h3>
     
        <!-- <h2>Tipos de Formulários Preenchidos</h2>
@@ -54,7 +58,7 @@
    
       </v-card>
       
-      <v-card v-else-if="!!paciente.pacienteSelecionado.nome && semForm" class="mt-2 ml-2 mr-2">
+      <v-card v-else-if="!!pacienteSelecionado.nome && semForm" class="mt-2 ml-2 mr-2">
         <h3 class="text-h6 pa-2 mt-2">
           Este mês, o paciente ainda não passou por nenhuma sessão, impossibilitando a geração do gráfico.
       </h3>
@@ -76,19 +80,23 @@
 </template>
 
 <script setup>
-import {  ref, onMounted, watch } from 'vue';
+import {  ref, onMounted, watch, computed} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getPacientes, getPacientePorId , getFormulariosMes} from '../modulos/pacientesMethods'
 import { useMyPaciente} from '@/stores/paciente'
 import ModalHistoricoPaciente from '@/components/modal/modalHistoricoPaciente.vue';
 import Chart from 'chart.js/auto';
 
-
 var pacienteSelecionado = ref(null)
 const modalHistorico = ref(false);
 const modal = ref(false);
 const paciente = useMyPaciente()
 pacienteSelecionado.value = paciente.pacienteSelecionado
+
+
+const pacienteComp = computed(() => {
+  return paciente.pacienteSelecionado;
+});
 
 const rotas = ref(
   [
@@ -109,7 +117,7 @@ const resetPaciente = (()=>{
 const router = useRouter();
 var pacientes = ref([]);
 var formulario = ref(null)
-var countFormularios = ref(0)
+const countFormularios = ref(0)
 
 
 const chartData = ref({}); // Coloque seus dados de gráfico aqui
@@ -170,12 +178,17 @@ watch(selectedPaciente, (novoValor, valorAntigo) => {
         contarFormulariosComEstadoInicialRuimEFinalBom(paciente.pacienteSelecionado.formulariosMes);
         semForm.value = false;
         console.log("temForms");
-        console.log(resp);
+        
     } catch (err) {
-        console.error(err.message); // Exibe a mensagem de erro no console
+        console.error(err); // Exibe a mensagem de erro no console
         semForm.value = true;
         console.log("não temForms");
-        chartData.value = {};
+        // chartData.value = {};
+        contarFormulariosComEstadoInicialRuimEFinalBom([]);
+    } finally {
+      pacienteSelecionado.value = paciente.pacienteSelecionado;
+        contarFormulariosComEstadoInicialRuimEFinalBom(paciente.pacienteSelecionado.formulariosMes);
+
     }
   }); 
 });
@@ -194,11 +207,11 @@ function contarFormulariosComEstadoInicialRuimEFinalBom(formularios) {
   if (formularios == undefined) return
   
     let contador = 0;
-    let lenght = 0
+    let tamanho = 0
     
     // Iterar sobre cada formulário
     formularios.forEach(formulario => {
-    lenght++
+    tamanho++
       const nomeFormulario = formulario.nomeForm;
       if (tiposDeFormularios.value[nomeFormulario]) {
         tiposDeFormularios.value[nomeFormulario]++;
@@ -220,7 +233,7 @@ function contarFormulariosComEstadoInicialRuimEFinalBom(formularios) {
     });
     let dados = Object.entries(tiposDeFormularios.value).map(([chave, valor]) => `${valor}`)
     let labels = Object.entries(tiposDeFormularios.value).map(([chave, valor]) => `${chave}`)
-    console.log(dados)
+    // console.log(dados)
    
     
 
@@ -260,7 +273,7 @@ function contarFormulariosComEstadoInicialRuimEFinalBom(formularios) {
             }]}
     
     // criaGrafico(labels, dados)
-    countFormularios.value = lenght
+    countFormularios.value = tamanho
     countSaiuBem.value = contador
     return contador;
 }

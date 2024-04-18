@@ -2,7 +2,7 @@
     <Pie
       id="my-chart-id"
       :options="chartOptions1"
-      :data="chartData1"
+      :data="chartData"
       
     />
     <div>
@@ -35,7 +35,8 @@
       handler(newData) {
         
         this.chartData1 = newData
-        console.log(newData)
+        console.log("data: ", newData)
+        
         this.$forceUpdate
        
       },

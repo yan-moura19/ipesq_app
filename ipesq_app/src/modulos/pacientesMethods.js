@@ -76,11 +76,19 @@ export async function atualizaFormulario(form){
      
 }
 export async function getFormularios(body){
+    console.log(body)
     
     const myPaciente = useMyPaciente();
+    let paciente = {...myPaciente.pacienteSelecionado}
     let id = getIdPaciente();
     let headers = getHeaders();
-    return await axios.get(`${URL_API}Formulario?pacienteId=${id}&dataInicio=${body.dataInicio}&dataFim=${body.dataFim}${body.especialidadeId? '&especialidadeId='+body.especialidadeId :''}`, { headers:headers}).then((resp)=>{
+    console.log(id)
+    console.log(!id)
+    console.log(!!id)
+    if(!id) return
+
+    return await axios.get(`${URL_API}Formulario?pacienteId=${id}&dataInicio=${body.dataInicio}&dataFim=${body.dataFim}${body.especialidadeId? '&especialidadeId='+body.especialidadeId :''}`,
+     { headers:headers}).then((resp)=>{
         let modelPaciente = resp.data.paciente
 
         let formulariosFormatter = resp.data.formularios.map((form)=>{
@@ -93,6 +101,9 @@ export async function getFormularios(body){
         
         modelPaciente.formularios = formulariosFormatter
         myPaciente.setPacienteSelecionado(modelPaciente);
+    }).catch(()=>{
+        paciente.formularios = []
+        myPaciente.setPacienteSelecionado(paciente);
     })
 
 }
@@ -117,6 +128,11 @@ export async function getFormulariosMes(body){
         
         modelPaciente.formulariosMes = formulariosFormatter
         myPaciente.setPacienteSelecionado(modelPaciente);
+    }).catch(()=>{
+        let pacienteSemForms = {...myPaciente.pacienteSelecionado}
+        pacienteSemForms.formulariosMes = []
+        
+        myPaciente.setPacienteSelecionado(pacienteSemForms);
     })
 
 
