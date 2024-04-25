@@ -27,16 +27,23 @@
       </v-row>
       
       <info-paciente/>
-      {{ !!pacienteComp.nome && !semForm && countFormularios>1 }} - 
-      {{  !semForm  }} -
-      {{  countFormularios>1 }} -
-      {{ pacienteComp.nome }}
-      <v-card class="mt-3 ml-2 mr-2 align-center text-center " v-if="!!pacienteComp.nome && !semForm && countFormularios>1">
+      
+      <v-card  class="mt-3 ml-2 mr-2 align-center text-center " v-if="loading"> 
+        <h3  class="text-h6 align-center text-center text ml-2">
+          CARREGANDO...
+      </h3>
+        
+        <v-progress-circular
+      :size="300"
+      color="primary"
+      indeterminate
+    ></v-progress-circular></v-card>
+      <v-card class="mt-3 ml-2 mr-2 align-center text-center " v-else-if="!!pacienteComp.nome && !semForm && countFormularios>=1">
        
       <h3  class="text-h6 text-left ml-2">
         Este mês foram {{ countFormularios }} sessões <br>
         
-        Saiu tranquilo e colaborativo em {{ countSaiuBem }} <br>
+        Dentre elas, {{ countSaiuBem }} foram consideradas tranquilas e colaborativas. <br>
 
         <!-- <span class="font-weight-bold">{{ countSaiuBem }}</span> das {{ countFormularios }} sessões. -->
       </h3>
@@ -58,10 +65,16 @@
    
       </v-card>
       
-      <v-card v-else-if="!!pacienteSelecionado.nome && semForm" class="mt-2 ml-2 mr-2">
-        <h3 class="text-h6 pa-2 mt-2">
-          Este mês, o paciente ainda não passou por nenhuma sessão, impossibilitando a geração do gráfico.
-      </h3>
+      <v-card v-else-if="!!pacienteSelecionado.nome && countFormularios == 0" class="mt-2 ml-2 mr-2">
+        <v-row justify="center">
+      <v-col cols="12" md="8">
+        <v-card>
+          <v-card-text class="pa-2">
+            <h3 class="text-h6 mt-2">Este mês, o paciente ainda não passou por nenhuma sessão, impossibilitando a geração do gráfico.</h3>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
       </v-card>
       
       
@@ -110,6 +123,7 @@ const rotas = ref(
 )
 const countSaiuBem = ref(0)
 const tiposDeFormularios  = ref({})
+const loading = ref(false)
 
 const resetPaciente = (()=>{
   paciente.resetPacienteSelecionado()
@@ -168,6 +182,7 @@ const onSelectedPacienteChange =  (idPaciente) => {
 
 watch(selectedPaciente, (novoValor, valorAntigo) => {
   if (novoValor == null) return;
+  loading.value =  true
   
   getPacientePorId(novoValor).then(async () => {
     pacienteSelecionado.value = paciente.pacienteSelecionado;
@@ -177,17 +192,19 @@ watch(selectedPaciente, (novoValor, valorAntigo) => {
         pacienteSelecionado.value = paciente.pacienteSelecionado;
         contarFormulariosComEstadoInicialRuimEFinalBom(paciente.pacienteSelecionado.formulariosMes);
         semForm.value = false;
-        console.log("temForms");
+      
         
     } catch (err) {
         console.error(err); // Exibe a mensagem de erro no console
         semForm.value = true;
-        console.log("não temForms");
+        loading.value =  false
+        
         // chartData.value = {};
         contarFormulariosComEstadoInicialRuimEFinalBom([]);
     } finally {
       pacienteSelecionado.value = paciente.pacienteSelecionado;
         contarFormulariosComEstadoInicialRuimEFinalBom(paciente.pacienteSelecionado.formulariosMes);
+        loading.value =  false
 
     }
   }); 
