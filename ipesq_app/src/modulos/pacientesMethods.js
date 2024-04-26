@@ -76,15 +76,13 @@ export async function atualizaFormulario(form){
      
 }
 export async function getFormularios(body){
-    console.log(body)
+   
     
     const myPaciente = useMyPaciente();
     let paciente = {...myPaciente.pacienteSelecionado}
     let id = getIdPaciente();
     let headers = getHeaders();
-    console.log(id)
-    console.log(!id)
-    console.log(!!id)
+   
     if(!id) return
 
     return await axios.get(`${URL_API}Formulario?pacienteId=${id}&dataInicio=${body.dataInicio}&dataFim=${body.dataFim}${body.especialidadeId? '&especialidadeId='+body.especialidadeId :''}`,

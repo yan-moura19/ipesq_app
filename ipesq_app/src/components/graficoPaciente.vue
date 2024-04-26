@@ -35,7 +35,7 @@
       handler(newData) {
         
         this.chartData1 = newData
-        console.log("data: ", newData)
+        //console.log("data: ", newData)
         
         this.$forceUpdate
        
