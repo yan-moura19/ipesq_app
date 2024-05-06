@@ -98,9 +98,12 @@ export async function getFormularios(body){
         })
         
         modelPaciente.formularios = formulariosFormatter
+       
+        
         myPaciente.setPacienteSelecionado(modelPaciente);
     }).catch(()=>{
         paciente.formularios = []
+        
         myPaciente.setPacienteSelecionado(paciente);
     })
 
@@ -125,9 +128,13 @@ export async function getFormulariosMes(body){
         })
         
         modelPaciente.formulariosMes = formulariosFormatter
+       
         myPaciente.setPacienteSelecionado(modelPaciente);
     }).catch(()=>{
         let pacienteSemForms = {...myPaciente.pacienteSelecionado}
+        pacienteSemForms.dataNascimento =  moment(pacienteSemForms.dataNascimento,"DD/MM/YYYY").format("YYYY-MM-DD")
+        
+        
         pacienteSemForms.formulariosMes = []
         
         myPaciente.setPacienteSelecionado(pacienteSemForms);
