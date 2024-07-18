@@ -154,7 +154,7 @@
         <v-textarea
         class="mx-4 "
        
-        v-model="formSelecionado.objetivoText"
+        v-model="formSelecionado.observacao"
         ></v-textarea>
     </v-col>
 
