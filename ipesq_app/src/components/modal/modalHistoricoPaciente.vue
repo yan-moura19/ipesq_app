@@ -46,6 +46,9 @@
     :headers="headers"
     :items="formularios"
     :items-per-page="itemsPerPage"
+    no-data-text="Nenhum formulário disponível"
+    loading-text="Carregando formulários"
+    :loading="loading"
   >
     <!-- <template v-slot:top>
       <v-text-field
