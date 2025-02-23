@@ -7,6 +7,7 @@ import fichadeevolucaofisioterapiarespiratoria from "@/views/fichaDeEvolucaoFisi
 import fichadeevolucaopsicopedagogia from '@/views/fichaDeEvolucaoPsicopedagogia.vue'
 import fichadeevolucaofisioterapiapsicomotricidade from '@/views/fichaDeEvolucaoFisioterapiaPsicomotricidade.vue'
 import fichadeevolucaofonoaudiologia from '@/views/fichaDeEvolucaoFonoaudiologia.vue'
+import antropometria from '@/views/antopometria.vue'
 import acompanhamentomensal from '@/views/acompanhamentoMensal.vue'
 import definirSenha from '@/pages/definirSenha.vue'
 
@@ -69,6 +70,12 @@ export default [
         component: acompanhamentomensal,
         name: 'acompanhamentomensal'
       },
+      {
+        path: '/antropometria',
+        component: antropometria,
+        name: 'antropometria'
+      },
+
 
 
 
